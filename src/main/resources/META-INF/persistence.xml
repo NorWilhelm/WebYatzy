@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+			 version="2.2">
+
+	<persistence-unit name="default" transaction-type="JTA">
+		<!--        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<jta-data-source>postgresql</jta-data-source>
+		<class>no.hvl.dat109.WebYatzy.model.Person</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<!--        <properties>-->
+		<!--            <property name="eclipselink.weaving" value="false" />-->
+		<!--        </properties>-->
+		<properties>
+			<property name="hibernate.dialect" value="PostgreSQL9"/>
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
+			<property name="tomee.jpa.factory.lazy" value="true" />
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>
