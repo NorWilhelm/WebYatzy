@@ -18,8 +18,8 @@ public class GameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) {
 
-        String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
-        String content = request.setAttribute("content", content); //
+        // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
+        // String content = request.setAttribute("content", content); //
 
     }
 
