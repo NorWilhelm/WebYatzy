@@ -7,7 +7,7 @@
         <!-- TODO: Add CSS/JS for displaying these forms in a pretty and intuitive way. -->
     </head>
     <body>
-    <form action="registrer" method="post">
+    <form action="register" method="post">
         <fieldset>
             <legend>Persondata</legend>
             <p>Username: <input type="text" name="username"/>/>
