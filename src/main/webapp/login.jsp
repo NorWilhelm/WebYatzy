@@ -17,11 +17,11 @@
     </form>
 
 
-    <form action="login" metod="post">
+    <form action="login" method="post">
         <fieldset>
             <legend>Persondata</legend>
             <p>Username: <input type="text" name="username"/>/>
-            <p>Password: <input type="passowrd" name="password"/>/>
+            <p>Password: <input type="password" name="password"/>/>
             <p><input type="submit" value="Login" />/>
         </fieldset>
     </form>
