@@ -13,9 +13,12 @@
   <body>
   <a href="/login">Login / create user</a>
   <a href="/yatzy">Start new game </a> <!-- Points to the servlet who creates a new game -->
-    <ul>
+    <ul> <!-- TODO: Get data for current games from websocket? -->
         <c:forEach var="game" items="${requestScope.games}">
-          <li>/li> <!-- TODO: Get data for current games from websocket? -->
+          <li>
+              <p><${game.gameId}</p>
+              <!-- TODO: John Olav: Add button for joining that specific game with it's gameId (see login.jsp) -->
+          /li>
         </c:forEach>
     </ul>
   </body>
