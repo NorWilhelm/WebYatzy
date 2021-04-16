@@ -19,11 +19,11 @@ public class UserDao {
         return em.createQuery("SELECT user FROM User user", User.class).getResultList();
     }
 
-    public User fetchUser(Integer userID) {
-        return em.find(User.class, userID);
+    public User fetchUser(String username) {
+        return em.find(User.class, username);
     }
 
-    public void CreateUser(User newUser) {
+    public void createUser(User newUser) {
         em.persist(newUser);
     }
 }

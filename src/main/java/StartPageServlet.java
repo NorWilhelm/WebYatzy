@@ -23,7 +23,7 @@ public class StartPageServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 
-        request.setAttribute("games", gameDao.findAll());
+        //request.setAttribute("games", gameDao.findAll());
 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("Test.jsp");
