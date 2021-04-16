@@ -18,7 +18,8 @@
           <li>
               <p><${game.gameId}</p>
               <!-- TODO: John Olav: Add button for joining that specific game with it's gameId (see login.jsp) -->
-          /li>
+              <button type="button" value="${game.gameId}">Join game</button>
+          </li>
         </c:forEach>
     </ul>
   </body>
