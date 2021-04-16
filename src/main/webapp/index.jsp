@@ -11,7 +11,7 @@
     <title>StartPage</title>
   </head>
   <body>
-  <a href="/login">Login / create user</a>
+  <a href="<%=request.getContextPath()%>/login">Login / create user</a>
   <a href="/yatzy">Start new game </a> <!-- Points to the servlet who creates a new game -->
     <ul> <!-- TODO: Get data for current games from websocket? -->
         <c:forEach var="game" items="${requestScope.games}">
