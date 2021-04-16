@@ -10,8 +10,8 @@
     <form action="registrer" method="post">
         <fieldset>
             <legend>Persondata</legend>
-            <p>Fornavn: <input type="text" name="fornavn" />/>
-            <p>Etternavn: <input type="text" name="etternavn" />/>
+            <p>Username: <input type="text" name="username"/>/>
+            <p>Password: <input type="password" name="password"/>/>
             <p><input type="submit" value="Registrer" />/>
         </fieldset>
     </form>
