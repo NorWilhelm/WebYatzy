@@ -23,7 +23,7 @@ public class UserDao {
         return em.find(User.class, userID);
     }
 
-    public void CreateUser(User nyBruker) {
-        em.persist(nyBruker);
+    public void CreateUser(User newUser) {
+        em.persist(newUser);
     }
 }
