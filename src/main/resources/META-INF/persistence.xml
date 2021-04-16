@@ -8,7 +8,7 @@
 		<!--        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>postgresql</jta-data-source>
-		<class>no.hvl.dat109.WebYatzy.model.Person</class>
+		<class>model.User</class> <!-- This is stored under src -> main -> model -> User -->
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<!--        <properties>-->
 		<!--            <property name="eclipselink.weaving" value="false" />-->
