@@ -26,7 +26,7 @@ public class StartPageServlet extends HttpServlet {
         //request.setAttribute("games", gameDao.findAll());
 
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Test.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 
