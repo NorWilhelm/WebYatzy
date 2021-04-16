@@ -3,8 +3,9 @@ drop schema if exists testschema cascade;
 create schema testschema;
 set search_path to testschema;
 
-create table person
+create table user
 (
     id   serial,
-    name varchar
+    username varchar,
+    password varchar
 );

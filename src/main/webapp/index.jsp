@@ -11,9 +11,12 @@
     <title>StartPage</title>
   </head>
   <body>
-  <a href="/yatzy">Start new game /> <!-- Points to the servlet who creates a new game -->
-    <ul> <!-- TODO: c: ... for each game list -->
-      <li><!-- TODO: Get data for current games from websocket? --></li>
+  <a href="/login">Login / create user</a>
+  <a href="/yatzy">Start new game </a> <!-- Points to the servlet who creates a new game -->
+    <ul>
+        <c:forEach var="game" items="${requestScope.games}">
+          <li>/li> <!-- TODO: Get data for current games from websocket? -->
+        </c:forEach>
     </ul>
   </body>
 </html>
