@@ -10,14 +10,11 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    private Integer userID;
-
     private String username;
 
     private String password;
 
-    public User(Integer userID, String username, String password) {
-        this.userID = userID;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
