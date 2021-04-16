@@ -30,4 +30,4 @@ hs_err_pid*
 /.project
 
 # Resources db sensitive data.
-src/main/webapp/WEB-INF/resources.xml
+/src/main/webapp/WEB-INF/resources.xml
