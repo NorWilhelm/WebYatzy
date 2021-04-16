@@ -32,7 +32,15 @@ public class RegisterUserServlet extends HttpServlet {
 
         System.out.println("User " + username + "Password" + password );
         List<User> users = userDao.fetchAllUsers();
-        if (users.contains(username)){
+        boolean userExists = false;
+        for (User user : users){
+            if(user.getUsername().compareTo(username) == 0){
+                userExists = true;
+                break;
+            }
+        }
+
+        if (userExists){
             System.out.println("Username taken");
             // TODO redirect to login with error message
         } else{
