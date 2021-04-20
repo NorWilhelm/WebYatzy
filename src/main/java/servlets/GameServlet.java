@@ -16,8 +16,25 @@ public class GameServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) {
-
+                         HttpServletResponse response) throws IOException {
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        System.out.println("stuff wooooorks!");
+        String text = "some teasdasdasdasdasdasdasdxt";
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        response.getWriter().write(text);
         // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
         // String content = request.setAttribute("content", content); //
 
