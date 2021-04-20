@@ -1,13 +1,24 @@
 package model;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@Table(schema = "test_schema", name="users")
+@NamedQuery(name = "User.findAll", query = "select p from User p")
 @Entity
-@Table(schema = "users")
 public class User {
+
+    @Id
+    private String username;
+    private String password;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     public String getUsername() {
         return username;
@@ -25,20 +36,13 @@ public class User {
         this.password = password;
     }
 
-    @Id
-    private String username;
 
-    private String password;
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public User() {}
 
     @Override
     public String toString() {
-        return "User: " + username + "password=" + password + "]";
+        return "Person{" +
+                "usernme=" + username +
+                ", pw='" + password + '\'' +
+                '}';
     }
 }

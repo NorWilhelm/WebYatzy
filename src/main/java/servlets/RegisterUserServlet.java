@@ -31,7 +31,8 @@ public class RegisterUserServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         System.out.println("User " + username + "Password" + password );
-        List<User> users = userDao.fetchAllUsers();
+        List<User> users = userDao.findAll();
+        System.out.println("Fatal error after db fetch query");
         boolean userExists = false;
         for (User user : users){
             if(user.getUsername().compareTo(username) == 0){

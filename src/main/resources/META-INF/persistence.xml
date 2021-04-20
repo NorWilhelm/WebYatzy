@@ -17,7 +17,7 @@
 			<property name="hibernate.dialect" value="PostgreSQL9"/>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-
+			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
 			<property name="tomee.jpa.factory.lazy" value="true" />
 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
 		</properties>
