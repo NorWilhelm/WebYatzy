@@ -18,17 +18,24 @@
             })
         })
 
+        async function kek() {
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        // window.onload = kek()
+
         function updateLobbyList() {
             console.log("updateLobbyList is running...")
-            $("#testDiv").text("Laster...")
-            // TODO:
+            // TODO: get Lobbies as list as JSON format and present at page
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
                 console.log(responseDataJSON)
-                forEach(lobby in responseDataJSON)
-                    var host = lobby.username_host
-                    console.log(host);
             })
-            console.log("test")
         }
        /* $(document).on("click", "#loadLobbies", function() {
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbies", function(responseLobbies) {
@@ -38,8 +45,7 @@
         })*/
     </script>
 </head>
-
-<body onload="updateLobbyList">
+<body onload="updateLobbyList()">
     <h1>Lobby</h1>
     <div id="testDiv"></div>
 <%--    <button id="loadLobbies">Load Games</button>--%>
