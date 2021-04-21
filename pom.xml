@@ -40,6 +40,12 @@
             <version>5.4.25.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
         <!-- postgresql -->
         <!-- https://mvnrepository.com/artifact/javax.ejb/ejb -->
         <dependency>
