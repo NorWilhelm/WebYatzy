@@ -37,12 +37,15 @@ public class LobbyListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Lobby list servlet was invoked");
-        System.out.println("Lobby list servlet was invoked");
-        System.out.println("Lobby list servlet was invoked");
-        System.out.println("Lobby list servlet was invoked");
-        System.out.println("Lobby list servlet was invoked");
-        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
 
         List<Game> all_games = gameDao.findAll();
         // Pre Games
@@ -51,6 +54,7 @@ public class LobbyListServlet extends HttpServlet {
                 .collect(Collectors.toList());
         Map<String, Map<String, String> > pre_games_map = new HashMap<>();
         for(Game game : pre_games){
+            System.out.printf("342342");
             Map<String, String> game_map = new HashMap<>();
             game_map.put("game_id", game.getGame_id().toString() );
             game_map.put("active_player", game.getActive_player());
