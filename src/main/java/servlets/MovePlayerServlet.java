@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/new_pre_game")
-public class PreGameServlet extends HttpServlet {
+public class MovePlayerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
     @EJB
     private ScoreCardDao scoreCardDao;
     @EJB
@@ -30,15 +31,13 @@ public class PreGameServlet extends HttpServlet {
 
 
         String username = (String) request.getAttribute("username");
+        String game_id =  (String) request.getAttribute("game_id");
 
-        System.out.println("New Game");
+        ScoreCard player_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(player_score_card);
+        Integer player_scid = player_score_card.getScore_card_id();
 
-
-        ScoreCard host_score_card = new ScoreCard();
-        scoreCardDao.createScoreCard(host_score_card);
-        Integer host_scid = host_score_card.getScore_card_id();
-
-        Game new_game = new Game(username, host_scid);
+        Game new_game = new Game(username, player_scid);
         System.out.println(new_game.getActive_player());
         gameDao.createGame(new_game);
 

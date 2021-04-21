@@ -35,7 +35,8 @@ public class Game {
     private Integer player_4_scid;
     private Integer player_5_scid;
 
-    public Game() {
+    public Game () {
+
     }
 
     public Game(String active_player, Integer current_round, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5, String username_host, String username_p2, String username_p3, String username_p4, String username_p5, String gamestate, Integer host_scid, Integer player_2_scid, Integer player_3_scid, Integer player_4_scid, Integer player_5_scid) {
