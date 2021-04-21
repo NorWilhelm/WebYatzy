@@ -19,8 +19,10 @@
         })
 
         function updateLobbyList() {
+            console.log("updateLobbyList is running...")
+            $("#testDiv").text("Laster...")
             // TODO:
-            $.get("http://localhost:8080/WebYatzy-0.0.2/lobbies", function(responseDataJSON) {
+            $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
                 console.log(responseDataJSON)
                 forEach(lobby in responseDataJSON)
                     var host = lobby.username_host
@@ -39,9 +41,12 @@
 
 <body onload="updateLobbyList">
     <h1>Lobby</h1>
+    <div id="testDiv"></div>
 <%--    <button id="loadLobbies">Load Games</button>--%>
     <button onclick="print(${pre_games})">load games (not working)</button>
+
     <div id="lobbyDiv"></div>
+
     <table>
         <tr>
             <th>Game ID</th>
