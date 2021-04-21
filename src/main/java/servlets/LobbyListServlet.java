@@ -65,10 +65,10 @@ public class LobbyListServlet extends HttpServlet {
             game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
             game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
             game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
-            pre_games_map.put("game_id", game_map);
+            pre_games_map.put(game.getGame_id().toString(), game_map);
         }
 
-        // Ongoing Games
+    /*    // Ongoing Games
         List<Game> ongoing_games = all_games.stream()
                 .filter(p_g -> p_g.getGamestate().equals("ongoing_game"))
                 .collect(Collectors.toList());
@@ -94,10 +94,10 @@ public class LobbyListServlet extends HttpServlet {
             game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
             game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
             game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
-            ongoing_games_map.put("game_id", game_map);
-        }
+            ongoing_games_map.put(game.getGame_id().toString(), game_map);
+        }*/
 
-        // Finished Games
+      /*  // Finished Games
         List<Game> post_games = all_games.stream()
                 .filter(p_g -> p_g.getGamestate().equals("post_game"))
                 .collect(Collectors.toList());
@@ -123,23 +123,23 @@ public class LobbyListServlet extends HttpServlet {
             game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
             game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
             game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
-            post_games_map.put("game_id", game_map);
-        }
+            post_games_map.put(game.getGame_id().toString(), game_map);
+        }*/
 
 
         // Pack Game Data
-        Map<String, Map<String, Map<String, String> >> response_data_map = new HashMap<>();
+       /* Map<String, Map<String, Map<String, String> >> response_data_map = new HashMap<>();
         response_data_map.put("pre_games", pre_games_map);
         response_data_map.put("ongoing_games", ongoing_games_map);
-        response_data_map.put("post_games", post_games_map);
-        String json = new Gson().toJson(response_data_map);
+        response_data_map.put("post_games", post_games_map);*/
+        String json = new Gson().toJson(pre_games_map);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
 
-        request.getRequestDispatcher("lobbies.jsp")
-                .forward(request, response);
+
+
     }
 
     @Override
