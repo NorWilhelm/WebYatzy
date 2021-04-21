@@ -46,38 +46,38 @@ public class LobbyListServlet extends HttpServlet {
                 .collect(Collectors.toList());
         Map<String, Map<String, String> > pre_games_map = new HashMap<>();
         for(Game game : pre_games){
-            System.out.printf("342342");
+
             Map<String, String> game_map = new HashMap<>();
             game_map.put("game_id", game.getGame_id().toString() );
-            String temp = game.getActive_player();
+
             game_map.put("active_player", game.getActive_player());
+            game_map.put("current_round", game.getCurrent_round() != null ? game.getCurrent_round().toString() : "null");
 
+            game_map.put("dice1",game.getDice1() != null ? game.getDice1().toString() : "null");
+            game_map.put("dice2", game.getDice2() != null ? game.getDice2().toString() : "null");
+            game_map.put("dice3", game.getDice3() != null ? game.getDice3().toString() : "null");
+            game_map.put("dice4", game.getDice4() != null ? game.getDice4().toString() : "null");
+            game_map.put("dice5", game.getDice5() != null ? game.getDice5().toString() : "null");
 
-            game_map.put("username_host", game.getUsername_host() );
-            game_map.put("username_p2", game.getUsername_p2() );
-            game_map.put("username_p3", game.getUsername_p3() );
-            game_map.put("username_p4", game.getUsername_p4() );
-            game_map.put("username_p5", game.getUsername_p5() );
-//            break;
-//
-//            game_map.put("current_round", game.getCurrent_round().toString() );
-//            game_map.put("dice1", game.getDice1().toString() );
-//            game_map.put("dice2", game.getDice2().toString() );
-//            game_map.put("dice3", game.getDice3().toString() );
-//            game_map.put("dice4", game.getDice4().toString() );
-//            game_map.put("dice5", game.getDice5().toString() );
-//
-//            game_map.put("gamestate", game.getGamestate() );
-//            game_map.put("host_scid", game.getHost_scid().toString() );
-//            game_map.put("player_2_scid", game.getPlayer_2_scid().toString() );
-//            game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
-//            game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
-//            game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
+            game_map.put("username_host", game.getUsername_host() != null ? game.getUsername_host() : "null");
+            game_map.put("username_p2", game.getUsername_p2() != null ?  game.getUsername_p2() : "null");
+            game_map.put("username_p3", game.getUsername_p3() != null ?  game.getUsername_p3() : "null");
+            game_map.put("username_p4", game.getUsername_p4() != null ? game.getUsername_p4() : "null");
+            game_map.put("username_p5", game.getUsername_p5() != null ?  game.getUsername_p5() : "null");
+
+            game_map.put("gamestate", game.getGamestate() );
+
+            game_map.put("host_scid", game.getHost_scid() != null ? game.getHost_scid().toString() : "null");
+            game_map.put("player_2_scid", game.getPlayer_2_scid() != null ? game.getPlayer_2_scid().toString() : "null");
+            game_map.put("player_3_scid", game.getPlayer_3_scid() != null ? game.getPlayer_3_scid().toString() : "null");
+            game_map.put("player_4_scid", game.getPlayer_4_scid() != null ? game.getPlayer_4_scid().toString() : "null");
+            game_map.put("player_5_scid", game.getPlayer_5_scid() != null ? game.getPlayer_5_scid().toString() : "null");
+
             pre_games_map.put(game.getGame_id().toString(), game_map);
         }
 
 
-    /*    // Ongoing Games
+        // Ongoing Games
         List<Game> ongoing_games = all_games.stream()
                 .filter(p_g -> p_g.getGamestate().equals("ongoing_game"))
                 .collect(Collectors.toList());
@@ -85,26 +85,31 @@ public class LobbyListServlet extends HttpServlet {
         for(Game game : ongoing_games){
             Map<String, String> game_map = new HashMap<>();
             game_map.put("game_id", game.getGame_id().toString() );
+
             game_map.put("active_player", game.getActive_player());
-            game_map.put("current_round", game.getCurrent_round().toString() );
-            game_map.put("dice1", game.getDice1().toString() );
-            game_map.put("dice2", game.getDice2().toString() );
-            game_map.put("dice3", game.getDice3().toString() );
-            game_map.put("dice4", game.getDice4().toString() );
-            game_map.put("dice5", game.getDice5().toString() );
-            game_map.put("username_host", game.getUsername_host() );
-            game_map.put("username_p2", game.getUsername_p2() );
-            game_map.put("username_p3", game.getUsername_p3() );
-            game_map.put("username_p4", game.getUsername_p4() );
-            game_map.put("username_p5", game.getUsername_p5() );
+            game_map.put("current_round", game.getCurrent_round() != null ? game.getCurrent_round().toString() : "null");
+
+            game_map.put("dice1",game.getDice1() != null ? game.getDice1().toString() : "null");
+            game_map.put("dice2", game.getDice2() != null ? game.getDice2().toString() : "null");
+            game_map.put("dice3", game.getDice3() != null ? game.getDice3().toString() : "null");
+            game_map.put("dice4", game.getDice4() != null ? game.getDice4().toString() : "null");
+            game_map.put("dice5", game.getDice5() != null ? game.getDice5().toString() : "null");
+
+            game_map.put("username_host", game.getUsername_host() != null ? game.getUsername_host() : "null");
+            game_map.put("username_p2", game.getUsername_p2() != null ?  game.getUsername_p2() : "null");
+            game_map.put("username_p3", game.getUsername_p3() != null ?  game.getUsername_p3() : "null");
+            game_map.put("username_p4", game.getUsername_p4() != null ? game.getUsername_p4() : "null");
+            game_map.put("username_p5", game.getUsername_p5() != null ?  game.getUsername_p5() : "null");
+
             game_map.put("gamestate", game.getGamestate() );
-            game_map.put("host_scid", game.getHost_scid().toString() );
-            game_map.put("player_2_scid", game.getPlayer_2_scid().toString() );
-            game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
-            game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
-            game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
+
+            game_map.put("host_scid", game.getHost_scid() != null ? game.getHost_scid().toString() : "null");
+            game_map.put("player_2_scid", game.getPlayer_2_scid() != null ? game.getPlayer_2_scid().toString() : "null");
+            game_map.put("player_3_scid", game.getPlayer_3_scid() != null ? game.getPlayer_3_scid().toString() : "null");
+            game_map.put("player_4_scid", game.getPlayer_4_scid() != null ? game.getPlayer_4_scid().toString() : "null");
+            game_map.put("player_5_scid", game.getPlayer_5_scid() != null ? game.getPlayer_5_scid().toString() : "null");
             ongoing_games_map.put(game.getGame_id().toString(), game_map);
-        }*/
+        }
 
       /*  // Finished Games
         List<Game> post_games = all_games.stream()
@@ -137,11 +142,10 @@ public class LobbyListServlet extends HttpServlet {
 
 
         // Pack Game Data
-       /* Map<String, Map<String, Map<String, String> >> response_data_map = new HashMap<>();
+        Map<String, Map<String, Map<String, String> >> response_data_map = new HashMap<>();
         response_data_map.put("pre_games", pre_games_map);
         response_data_map.put("ongoing_games", ongoing_games_map);
-        response_data_map.put("post_games", post_games_map);*/
-        String json = new Gson().toJson(pre_games_map);
+        String json = new Gson().toJson(response_data_map);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
