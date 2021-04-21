@@ -24,11 +24,17 @@
             // TODO:
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
                 console.log(responseDataJSON)
-                forEach(lobby in responseDataJSON)
-                    var host = lobby.username_host
-                    console.log(host);
-            })
-            console.log("test")
+                                  // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+                $.each(responseDataJSON, function(key, value) {
+                    console.log("outer :" +key);
+                    console.log("outerasdasdas :"+value);
+                    $.each(value, function(key, value) {
+                        console.log("inner :" + key);
+                        console.log("inner :" + value);} );
+                    // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+                })
+            });
+            console.log("test");
         }
        /* $(document).on("click", "#loadLobbies", function() {
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbies", function(responseLobbies) {
@@ -36,13 +42,38 @@
                 $("#lobbyDiv").text(responseLobbies)
             })
         })*/
+
+
+        async function kek() {
+
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Success with loading")
+            await new Promise(r => setTimeout(r, 1000));
+
+        }
+
+        window.onload = updateLobbyList()
+
+
     </script>
 </head>
 
 <body onload="updateLobbyList">
+
     <h1>Lobby</h1>
     <div id="testDiv"></div>
 <%--    <button id="loadLobbies">Load Games</button>--%>
+
+    <form action="http://localhost:8080/WebYatzy-0.0.2/new_pre_game" method="get">
+
+            <input type="hidden" value="<%=request.getAttribute("username")%>" name="username">
+            <button type="submit">Create Game</button>
+    </form>
     <button onclick="print(${pre_games})">load games (not working)</button>
 
     <div id="lobbyDiv"></div>

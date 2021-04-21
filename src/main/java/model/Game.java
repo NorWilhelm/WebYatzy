@@ -63,7 +63,7 @@ public class Game {
 
     public Game(String username_host, Integer host_scid) {
         super();
-        this.active_player = null;
+        this.active_player = username_host;
         this.current_round = null;
         this.dice1 = null;
         this.dice2 = null;
