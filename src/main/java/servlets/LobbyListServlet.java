@@ -37,6 +37,12 @@ public class LobbyListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
 
         List<Game> all_games = gameDao.findAll();
         // Pre Games
