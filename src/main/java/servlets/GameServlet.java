@@ -46,23 +46,23 @@ public class GameServlet extends HttpServlet {
 
         List<ScoreCard> score_cards = new ArrayList<>();
         Integer host_scid = target_game.getHost_scid();
-        score_cards.add(scoreCardDao.fetchScoreCard(host_scid));
+        score_cards.add(scoreCardDao.findScoreCard(host_scid));
 
                 Integer player_2_scid = target_game.getPlayer_2_scid();
         if (player_2_scid != null ){
-            score_cards.add( scoreCardDao.fetchScoreCard(player_2_scid));
+            score_cards.add( scoreCardDao.findScoreCard(player_2_scid));
         }
         Integer player_3_scid = target_game.getPlayer_3_scid();
         if (player_3_scid != null ){
-            score_cards.add( scoreCardDao.fetchScoreCard(player_3_scid));
+            score_cards.add( scoreCardDao.findScoreCard(player_3_scid));
         }
         Integer player_4_scid = target_game.getPlayer_4_scid();
         if (player_4_scid != null ){
-            score_cards.add( scoreCardDao.fetchScoreCard(player_4_scid));
+            score_cards.add( scoreCardDao.findScoreCard(player_4_scid));
         }
         Integer player_5_scid = target_game.getPlayer_5_scid();
         if (player_5_scid != null ){
-            score_cards.add( scoreCardDao.fetchScoreCard(player_5_scid));
+            score_cards.add( scoreCardDao.findScoreCard(player_5_scid));
         }
 
 
