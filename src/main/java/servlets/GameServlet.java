@@ -17,6 +17,8 @@ public class GameServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
+
+
         System.out.println("stuff wooooorks!");
         System.out.println("stuff wooooorks!");
         System.out.println("stuff wooooorks!");

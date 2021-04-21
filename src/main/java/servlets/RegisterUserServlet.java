@@ -35,6 +35,7 @@ public class RegisterUserServlet extends HttpServlet {
         System.out.println("Fatal error after db fetch query");
         boolean userExists = false;
         for (User user : users){
+            System.out.println(user.getUsername());
             if(user.getUsername().compareTo(username) == 0){
                 userExists = true;
                 break;
