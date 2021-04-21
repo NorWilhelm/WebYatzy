@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>WebYatzy - Lobby</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         $(document).on("click", "#somebutton", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
@@ -18,12 +20,32 @@
             })
         })
 
-        function updateLobbyList() {
-            console.log("updateLobbyList is running...")
-            $("#testDiv").text("Laster...")
-            // TODO:
+        // Get lobbies
+        var preGames = []
+        var ongoingGames = []
+
+        function getLobbies() {
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
-                console.log(responseDataJSON)
+
+                for (var lobby in responseDataJSON.pre_games)
+                    preGames.push([lobby, responseDataJSON.pre_games[lobby]])
+
+                for (var lobby in responseDataJSON.ongoing_games)
+                    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
+
+                console.log("pregames: ")
+                console.log(preGames)
+                console.log("ongoing games: ")
+                console.log(ongoingGames)
+
+                console.log("")
+            })
+        }
+
+        /*function updateLobbyList() {
+             console.log("updateLobbyList is running...")
+            $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
+                 console.log(responseDataJSON)
                                   // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
                 $.each(responseDataJSON, function(key, value) {
                     console.log("outer :" +key);
@@ -35,7 +57,7 @@
                 })
             });
             console.log("test");
-        }
+        }*/
        /* $(document).on("click", "#loadLobbies", function() {
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbies", function(responseLobbies) {
                 console.log(responseLobbies)
@@ -57,40 +79,44 @@
 
         }
 
-        window.onload = updateLobbyList()
-
+        // window.onload = updateLobbyList()
+        window.onload = getLobbies()
 
     </script>
 </head>
 
-<body onload="updateLobbyList">
+<!-- <body onload="updateLobbyList()"> -->
+<body style="margin: 20px">
 
     <h1>Lobby</h1>
+    <h3>Velkommmen <%=request.getAttribute("username")%></h3>
     <div id="testDiv"></div>
 <%--    <button id="loadLobbies">Load Games</button>--%>
 
     <form action="http://localhost:8080/WebYatzy-0.0.2/new_pre_game" method="get">
 
             <input type="hidden" value="<%=request.getAttribute("username")%>" name="username">
-            <button type="submit">Create Game</button>
+            <button class="btn btn-primary btn-sm" type="submit">Create Game</button>
     </form>
-    <button onclick="print(${pre_games})">load games (not working)</button>
+    <button class="btn btn-primary btn-sm" onclick="print(${preGames})">Print games to PDF</button>
 
-    <div id="lobbyDiv"></div>
+    <div id="lobbyDiv"></div> <!-- Not in use? -->
 
-    <table>
-        <tr>
-            <th>Game ID</th>
-            <th>Active Player</th>
-            <th>Current Round</th>
-            <th>[USERNAME]</th>
+    <!-- TODO: If getAttr("username") is username_host, then... -->
+    <table class="table">
+        <tr scope="row">
+            <th scope="col">Active Player</th>
+            <th scope="col">Host user</th>
+            <th scope="col">Current Round</th>
+            <th scope="col">Action</th>
         </tr>
-        <c:forEach var="game" items="${pre_games}">
-            <tr>
-                <p>${game.gameID}</p>
-                <button type="button" value="${game.gameID}">Join game</button>
+        <c:forEach var="lobby" items="${preGames}">
+            <tr scope="row">
+                ${lobby}
             </tr>
         </c:forEach>
     </table>
+
+    <button class="btn btn-primary btn-sm" type="button" value="${lobby.game_id}">Join game</button>
 </body>
 </html>
