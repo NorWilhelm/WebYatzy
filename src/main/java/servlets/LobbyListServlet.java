@@ -37,15 +37,7 @@ public class LobbyListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
-        System.out.println("Lobby list servlet was invoked" + (String)request.getParameter("username"));
+
 
         List<Game> all_games = gameDao.findAll();
         // Pre Games
@@ -57,26 +49,33 @@ public class LobbyListServlet extends HttpServlet {
             System.out.printf("342342");
             Map<String, String> game_map = new HashMap<>();
             game_map.put("game_id", game.getGame_id().toString() );
+            String temp = game.getActive_player();
             game_map.put("active_player", game.getActive_player());
-            game_map.put("current_round", game.getCurrent_round().toString() );
-            game_map.put("dice1", game.getDice1().toString() );
-            game_map.put("dice2", game.getDice2().toString() );
-            game_map.put("dice3", game.getDice3().toString() );
-            game_map.put("dice4", game.getDice4().toString() );
-            game_map.put("dice5", game.getDice5().toString() );
+
+
             game_map.put("username_host", game.getUsername_host() );
             game_map.put("username_p2", game.getUsername_p2() );
             game_map.put("username_p3", game.getUsername_p3() );
             game_map.put("username_p4", game.getUsername_p4() );
             game_map.put("username_p5", game.getUsername_p5() );
-            game_map.put("gamestate", game.getGamestate() );
-            game_map.put("host_scid", game.getHost_scid().toString() );
-            game_map.put("player_2_scid", game.getPlayer_2_scid().toString() );
-            game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
-            game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
-            game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
+//            break;
+//
+//            game_map.put("current_round", game.getCurrent_round().toString() );
+//            game_map.put("dice1", game.getDice1().toString() );
+//            game_map.put("dice2", game.getDice2().toString() );
+//            game_map.put("dice3", game.getDice3().toString() );
+//            game_map.put("dice4", game.getDice4().toString() );
+//            game_map.put("dice5", game.getDice5().toString() );
+//
+//            game_map.put("gamestate", game.getGamestate() );
+//            game_map.put("host_scid", game.getHost_scid().toString() );
+//            game_map.put("player_2_scid", game.getPlayer_2_scid().toString() );
+//            game_map.put("player_3_scid", game.getPlayer_3_scid().toString() );
+//            game_map.put("player_4_scid", game.getPlayer_4_scid().toString() );
+//            game_map.put("player_5_scid", game.getPlayer_5_scid().toString() );
             pre_games_map.put(game.getGame_id().toString(), game_map);
         }
+
 
     /*    // Ongoing Games
         List<Game> ongoing_games = all_games.stream()
@@ -147,7 +146,7 @@ public class LobbyListServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
-
+        System.out.println("Ending lobby servelers");
 
 
     }
