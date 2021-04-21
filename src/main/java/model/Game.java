@@ -82,7 +82,7 @@ public class Game {
         this.player_4_scid = null;
         this.player_5_scid = null;
     }
-    }
+
 
     public void setGame_id(Integer game_id) {
         this.game_id = game_id;
