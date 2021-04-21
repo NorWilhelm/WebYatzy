@@ -121,7 +121,7 @@
     <h1 class="display-4">Lobby</h1>
     <h6>Velkommmen <span style="font-weight: bold"><%=request.getAttribute("username")%></span></h6>
 
-        <form action="http://localhost:8080/WebYatzy-0.0.2/new_pre_game" method="get">
+        <form action="http://localhost:8080/WebYatzy-0.0.2/create_lobby" method="get">
             <input type="hidden" value="<%=request.getAttribute("username")%>" name="username">
             <button class="btn btn-primary btn-sm" type="submit">Create Game</button>
         </form>
