@@ -7,7 +7,7 @@
       <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   </head>
   <body style="margin: 20px;">
-    <h1>WebYatzy 🎲️</h1>
+    <h1 style="margin-bottom: 20px">WebYatzy 🎲️</h1>
     <a class="btn btn-primary" href="<%=request.getContextPath()%>/login" role="button">Login/create user</a>
     <a class="btn btn-primary" href="/yatzy" role="button">Start new game</a> <!-- Points to the servlet who creates a new game -->
   </body>

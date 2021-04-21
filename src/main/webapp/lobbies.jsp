@@ -42,6 +42,37 @@
             })
         }
 
+        // Same as above, only async O.o
+
+        var asyncPreGames = []
+
+        async function getLobbies() {
+
+                    <!-- TODO: Make this as a loop (include a sleep timer, see example below) -->
+            await new Promise((resolve, reject) =>
+                $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
+                    let localPreGames = []
+
+                    for (var lobby in responseDataJSON.pre_games)
+                        localPreGames.push([lobby, responseDataJSON.pre_games[lobby]])
+
+                    //for (var lobby in responseDataJSON.ongoing_games)
+                    //   ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
+                    // TODO: Perhaps not check if null, but just return when done.
+                    if (localPreGames != null) {
+                        asyncPreGames = localPreGames
+                        console.log("async pregames er:")
+                        console.log(asyncPreGames)
+                        // console.log(asyncPreGames[1][1].active_player)
+                        resolve()
+                    }
+                    else
+                        reject()
+                })
+            )
+        }
+
+
         /*function updateLobbyList() {
              console.log("updateLobbyList is running...")
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
@@ -61,7 +92,6 @@
        /* $(document).on("click", "#loadLobbies", function() {
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbies", function(responseLobbies) {
                 console.log(responseLobbies)
-                $("#lobbyDiv").text(responseLobbies)
             })
         })*/
 
@@ -88,21 +118,20 @@
 <!-- <body onload="updateLobbyList()"> -->
 <body style="margin: 20px">
 
-    <h1>Lobby</h1>
-    <h3>Velkommmen <%=request.getAttribute("username")%></h3>
-    <div id="testDiv"></div>
-<%--    <button id="loadLobbies">Load Games</button>--%>
+    <h1 class="display-4">Lobby</h1>
+    <h6>Velkommmen <span style="font-weight: bold"><%=request.getAttribute("username")%></span></h6>
 
-    <form action="http://localhost:8080/WebYatzy-0.0.2/new_pre_game" method="get">
-
+        <form action="http://localhost:8080/WebYatzy-0.0.2/new_pre_game" method="get">
             <input type="hidden" value="<%=request.getAttribute("username")%>" name="username">
             <button class="btn btn-primary btn-sm" type="submit">Create Game</button>
-    </form>
-    <button class="btn btn-primary btn-sm" onclick="print(${preGames})">Print games to PDF</button>
+        </form>
+        <button class="btn btn-primary btn-sm" onclick="print(${preGames})">Print games to PDF</button>
 
-    <div id="lobbyDiv"></div> <!-- Not in use? -->
+
+    <h2>${string.asyncPreGames[1][1].active_player}</h2>
 
     <!-- TODO: If getAttr("username") is username_host, then... -->
+
     <table class="table">
         <tr scope="row">
             <th scope="col">Active Player</th>
@@ -110,10 +139,12 @@
             <th scope="col">Current Round</th>
             <th scope="col">Action</th>
         </tr>
-        <c:forEach var="lobby" items="${preGames}">
-            <tr scope="row">
-                ${lobby}
-            </tr>
+        <c:forEach var="lobby" items="${asyncPreGames}">
+            <c:forEach var="item" items="lobby">
+                <tr scope="row">
+                    <p>${item[1].active_player}</p>
+                </tr>
+            </c:forEach>
         </c:forEach>
     </table>
 
