@@ -22,19 +22,16 @@ public class ScoreCardDaoImpl implements ScoreCardDao {
     @Override
     public void createScoreCard(ScoreCard scoreCard) {
         em.persist(scoreCard);
+    }
 
+    @Override
+    public void removeScoreCard (Integer id){
+        ScoreCard foundScoreCard = em.find(ScoreCard.class, id);
+        assert foundScoreCard != null : "The card with id " + id + " hasn't been found in the database!";
     }
 
     @Override
     public ScoreCard findScoreCard (Integer id){
-       ScoreCard tagretScoreCard = null;
-       List<ScoreCard> scoreCards = findAll();
-       for (ScoreCard sc : scoreCards){
-           if (sc.getScore_card_id().equals(id)){
-               tagretScoreCard = sc;
-           }
-       }
-       assert tagretScoreCard != null : "The score card you have tried to reach hasn't been found! ScoreCardDAO.getScoreCard()";
-       return tagretScoreCard;
+       return em.find(ScoreCard.class, id);
     }
 }
