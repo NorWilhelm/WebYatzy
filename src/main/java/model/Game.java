@@ -35,7 +35,7 @@ public class Game {
     private Integer player_4_scid;
     private Integer player_5_scid;
 
-    public Game (){
+    public Game () {
 
     }
 
@@ -81,6 +81,7 @@ public class Game {
         this.player_3_scid = null;
         this.player_4_scid = null;
         this.player_5_scid = null;
+    }
     }
 
     public void setGame_id(Integer game_id) {

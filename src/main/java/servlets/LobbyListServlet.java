@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "lobbyList", value = "/lobbies")
+@WebServlet(name = "lobbyList", value = "/lobbiesServlet")
 public class LobbyListServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,12 @@ public class LobbyListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
+        System.out.println("Lobby list servlet was invoked");
 
         List<Game> all_games = gameDao.findAll();
         // Pre Games
