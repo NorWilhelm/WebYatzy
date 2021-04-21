@@ -18,38 +18,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/new_pre_game")
-public class PreGameServlet extends HttpServlet {
+@WebServlet("/create_lobby")
+public class CreateLobbyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @EJB
-    private ScoreCardDao scoreCardDao;
+
     @EJB
     private GameDao gameDao;
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
+        String game_id =  (String) request.getAttribute("username");
+        if(!game_id.equals("null"))
+            return;
 
         String username = (String) request.getAttribute("username");
-
-        System.out.println("New Game");
-
-
-        ScoreCard host_score_card = new ScoreCard();
-        scoreCardDao.createScoreCard(host_score_card);
-        Integer host_scid = host_score_card.getScore_card_id();
-
-        Game new_game = new Game(username, host_scid);
+        Game new_game = new Game(username);
         System.out.println(new_game.getActive_player());
         gameDao.createGame(new_game);
-
-
 
         request.setAttribute("game_id", new_game.getGame_id());
         request.setAttribute("username", username);
         request.getRequestDispatcher("lobbies.jsp").forward(request, response);
-        // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
-        // String content = request.setAttribute("content", content); //
-
     }
 
     @Override

@@ -18,44 +18,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/move_player")
-public class MovePlayerServlet extends HttpServlet {
+@WebServlet("/create_lobby")
+public class JoinLobbyServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    @EJB
-    private ScoreCardDao scoreCardDao;
     @EJB
     private GameDao gameDao;
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-
-        String username = (String) request.getAttribute("username");
         String game_id =  (String) request.getAttribute("game_id");
+        String username =  (String) request.getAttribute("username");
 
-        ScoreCard player_score_card = new ScoreCard();
-        scoreCardDao.createScoreCard(player_score_card);
-        Integer player_scid = player_score_card.getScore_card_id();
+        gameDao.removePlayer(gameDao.findPlayerLobby(username), username);
         Game game = gameDao.findGame(Integer.parseInt(game_id));
 
-        if(game.getUsername_host().equals(username))
-            game.setHost_scid(player_scid);
-        else if(game.getUsername_p2().equals(username))
-            game.setPlayer_2_scid(player_scid);
-        else if(game.getUsername_p3().equals(username))
-            game.setPlayer_3_scid(player_scid);
-        else if(game.getUsername_p4().equals(username))
-            game.setPlayer_4_scid(player_scid);
-        else if(game.getUsername_p5().equals(username))
-            game.setPlayer_5_scid(player_scid);
-
+        gameDao.joinPlayer(game.getGame_id(), username);
 
         request.setAttribute("game_id", game.getGame_id());
         request.setAttribute("username", username);
-        request.getRequestDispatcher("games.jsp").forward(request, response);
-        // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
-        // String content = request.setAttribute("content", content); //
-
+        request.getRequestDispatcher("lobbies.jsp").forward(request, response);
     }
 
     @Override

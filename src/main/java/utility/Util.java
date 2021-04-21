@@ -3,7 +3,7 @@ package utility;
 public class Util {
 
 
-    private static int calculateScore(int round, int dice1, int dice2, int dice3, int dice4, int dice5) {
+    public static int calculateScore(int round, int dice1, int dice2, int dice3, int dice4, int dice5) {
         int[] dice = {dice1, dice2, dice3, dice4, dice5};
         int score = 0;
         if (round == 1) {
