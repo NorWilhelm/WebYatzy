@@ -26,11 +26,11 @@ public class ScoreCardDaoImpl implements ScoreCardDao {
     }
 
     @Override
-    public ScoreCard getScoreCard (Integer id){
+    public ScoreCard findScoreCard (Integer id){
        ScoreCard tagretScoreCard = null;
        List<ScoreCard> scoreCards = findAll();
        for (ScoreCard sc : scoreCards){
-           if ((sc.getScore_card_id().intValue()) == id){
+           if (sc.getScore_card_id().equals(id)){
                tagretScoreCard = sc;
            }
        }
