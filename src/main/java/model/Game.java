@@ -7,8 +7,11 @@ import javax.persistence.*;
 @Entity
 public class Game {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long game_id;
+    @Id
+    @Column(name = "game_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    private Integer game_id;
 
     private String active_player;
     private Integer current_round;
@@ -34,6 +37,7 @@ public class Game {
 
 
     public Game(String active_player, Integer current_round, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5, String username_host, String username_p2, String username_p3, String username_p4, String username_p5, String gamestate, Integer host_scid, Integer player_2_scid, Integer player_3_scid, Integer player_4_scid, Integer player_5_scid) {
+        super();
         this.active_player = active_player;
         this.current_round = current_round;
         this.dice1 = dice1;
@@ -58,7 +62,11 @@ public class Game {
 
     }
 
-    public Long getGame_id() {
+    public void setGame_id(Integer game_id) {
+        this.game_id = game_id;
+    }
+
+    public Integer getGame_id() {
         return game_id;
     }
 
