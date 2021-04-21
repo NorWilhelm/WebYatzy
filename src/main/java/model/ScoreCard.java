@@ -11,7 +11,7 @@ public class ScoreCard {
     @Column(name = "score_card_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Long score_card_id;
+    private Integer score_card_id;
 
 
     private Integer ones;
@@ -71,11 +71,11 @@ public class ScoreCard {
 
 
 
-    public void setScore_card_id(Long score_card_id) {
+    public void setScore_card_id(Integer score_card_id) {
         this.score_card_id = score_card_id;
     }
 
-    public Long getScore_card_id() {
+    public Integer getScore_card_id() {
         return score_card_id;
     }
 

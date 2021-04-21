@@ -58,8 +58,27 @@ public class Game {
         this.player_5_scid = player_5_scid;
     }
 
-    public Game() {
-
+    public Game(String username_host, Integer host_scid) {
+        super();
+        this.active_player = null;
+        this.current_round = null;
+        this.dice1 = null;
+        this.dice2 = null;
+        this.dice3 = null;
+        this.dice4 = null;
+        this.dice5 = null;
+        this.username_host = username_host;
+        this.username_p2 = null;
+        this.username_p3 = null;
+        this.username_p4 = null;
+        this.username_p5 = null;
+        this.gamestate = "pre_game";
+        this.host_scid = host_scid;
+        this.player_2_scid = null;
+        this.player_3_scid = null;
+        this.player_4_scid = null;
+        this.player_5_scid = null;
+    }
     }
 
     public void setGame_id(Integer game_id) {
