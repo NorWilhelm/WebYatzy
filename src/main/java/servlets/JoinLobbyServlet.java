@@ -30,9 +30,11 @@ public class JoinLobbyServlet extends HttpServlet {
         String game_id =  (String) request.getAttribute("game_id");
         String username =  (String) request.getAttribute("username");
 
-        gameDao.removePlayer(gameDao.findPlayerLobby(username), username);
-        Game game = gameDao.findGame(Integer.parseInt(game_id));
+        Integer old_lobby = gameDao.findPlayerLobby(username);
+        if (old_lobby!=(null))
+            gameDao.removePlayer(old_lobby, username);
 
+        Game game = gameDao.findGame(Integer.parseInt(game_id));
         gameDao.joinPlayer(game.getGame_id(), username);
 
         request.setAttribute("game_id", game.getGame_id());
