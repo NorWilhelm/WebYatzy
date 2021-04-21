@@ -8,4 +8,5 @@ public interface ScoreCardDao {
 
     List<ScoreCard> findAll();
     void createScoreCard( ScoreCard  scoreCard);
+    ScoreCard getScoreCard (Integer id);
 }
