@@ -31,11 +31,11 @@
     }
 
     function startGameButton (gameId){
-        var username = "<%=request.getAttribute("username")%>>"
+        var username = "<%=request.getAttribute("username")%>"
         var actionButton = "<form action = 'http://localhost:8080/WebYatzy-0.0.2/startGame' method='get'>" +
-            "<input type = 'hidden' value = " + username + " name = 'username'>" +
-            "<input type = 'hidden' value = " + gameId + " name = 'gameId'>" +
-            '<button class = "btn btn-primary btn-sm" type = "submit">Start game</button>' +
+            "<input type='hidden' value=" + username + " name='username'>" +
+                "<input type='hidden' value=" + gameId + " name='game_id'>" +
+            '<button class="btn btn-primary btn-sm" type="submit">Start game</button>' +
             '</form>'
         return actionButton;
     }

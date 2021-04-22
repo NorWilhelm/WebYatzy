@@ -28,7 +28,7 @@ public class StartGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-        String gameId = request.getParameter("game_id");    //returns null TODO: answer the question: Why does it return null?
+        String gameId = (String) request.getParameter("game_id");    //returns null TODO: answer the question: Why does it return null?
         int gameIdInt = Integer.parseInt(gameId);
         String userName = (String) request.getParameter("username");
         if (gameDao.areInOneGame(gameIdInt)) {
@@ -44,7 +44,7 @@ public class StartGameServlet extends HttpServlet {
         }
         request.setAttribute("game_id", gameIdInt);
         request.setAttribute("username", userName);
-        request.getRequestDispatcher("game.jsp").forward(request, response);
+        request.getRequestDispatcher("/move_player").forward(request, response);
     }
 
     @Override
