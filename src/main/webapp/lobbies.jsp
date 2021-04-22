@@ -13,65 +13,37 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        $(document).on("click", "#somebutton", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("http://localhost:8080/WebYatzy-0.0.2/game", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                console.log(responseText)
-                $("#somediv").text(responseText)           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
-            })
-        })
+        function syncView(preGames) {
+            // TODO: Update the table with data from getLobbies()
+            // $("#testView").innerHTML("test")
+        }
 
         // Get lobbies
-        var preGames = []
-        var ongoingGames = []
-
         function getLobbies() {
-            $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
+            console.log("kjører getLobbies")
 
-                for (var lobby in responseDataJSON.pre_games)
-                    preGames.push([lobby, responseDataJSON.pre_games[lobby]])
+            var $testVariabel = $("#testViewId")
+            $testVariabel.find("option").remove()
+            $("<option>").val("test").text("hest").appendTo($testVariabel)
 
-                for (var lobby in responseDataJSON.ongoing_games)
-                    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
 
-                console.log("pregames: ")
-                console.log(preGames)
-                console.log("ongoing games: ")
-                console.log(ongoingGames)
-
-                console.log("")
-            })
-        }
-
-        // Same as above, only async O.o
-
-        var asyncPreGames = []
-
-        async function getLobbies() {
-
-                    <!-- TODO: Make this as a loop (include a sleep timer, see example below) -->
-            await new Promise((resolve, reject) =>
                 $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
-                    let localPreGames = []
 
+                    var preGames = []
                     for (var lobby in responseDataJSON.pre_games)
-                        localPreGames.push([lobby, responseDataJSON.pre_games[lobby]])
+                        preGames.push(responseDataJSON.pre_games[lobby])
 
                     //for (var lobby in responseDataJSON.ongoing_games)
-                    //   ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
-                    // TODO: Perhaps not check if null, but just return when done.
-                    if (localPreGames != null) {
-                        asyncPreGames = localPreGames
-                        console.log("async pregames er:")
-                        console.log(asyncPreGames)
-                        // console.log(asyncPreGames[1][1].active_player)
-                        resolve()
-                    }
-                    else
-                        reject()
-                })
-            )
-        }
+                    //    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
 
+                    // Perhaps not check if null, but just return when done.
+                    console.log("Ferdig med async")
+                    console.log("preGames: ")
+                    console.log(preGames)
+
+                    syncView(preGames)
+                })
+        }
 
         /*function updateLobbyList() {
              console.log("updateLobbyList is running...")
@@ -95,20 +67,6 @@
             })
         })*/
 
-
-        async function kek() {
-
-            console.log("Success with loading")
-            await new Promise(r => setTimeout(r, 1000));
-            console.log("Success with loading")
-            await new Promise(r => setTimeout(r, 1000));
-            console.log("Success with loading")
-            await new Promise(r => setTimeout(r, 1000));
-            console.log("Success with loading")
-            await new Promise(r => setTimeout(r, 1000));
-
-        }
-
         // window.onload = updateLobbyList()
         window.onload = getLobbies()
 
@@ -128,9 +86,9 @@
         <button class="btn btn-primary btn-sm" onclick="print(${preGames})">Print games to PDF</button>
 
 
-    <h2>${string.asyncPreGames[1][1].active_player}</h2>
-
     <!-- TODO: If getAttr("username") is username_host, then... -->
+
+    <div id="testViewId"></div>
 
     <table class="table">
         <tr scope="row">
@@ -139,13 +97,13 @@
             <th scope="col">Current Round</th>
             <th scope="col">Action</th>
         </tr>
-        <c:forEach var="lobby" items="${asyncPreGames}">
+        <%--<c:forEach var="lobby" items="${preGames}">
             <c:forEach var="item" items="lobby">
                 <tr scope="row">
                     <p>${item[1].active_player}</p>
                 </tr>
             </c:forEach>
-        </c:forEach>
+        </c:forEach>--%>
     </table>
 
     <button class="btn btn-primary btn-sm" type="button" value="${lobby.game_id}">Join game</button>
