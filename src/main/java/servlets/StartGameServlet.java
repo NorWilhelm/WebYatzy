@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/join_lobby")
+@WebServlet("/startGame")
 public class StartGameServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -28,24 +28,23 @@ public class StartGameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-        //Checks if players are in one and only game
-        //Check the game state to ongoing
-        Integer gameId = Integer.parseInt(request.getParameter("game_id"));
+        String gameId = request.getParameter("game_id");    //returns null TODO: answer the question: Why does it return null?
+        int gameIdInt = Integer.parseInt(gameId);
         String userName = (String) request.getParameter("username");
-        if (gameDao.areInOneGame(gameId)) {
-            gameDao.updateGameState(gameId, "ongoing");
+        if (gameDao.areInOneGame(gameIdInt)) {
+            gameDao.updateGameState(gameIdInt, "ongoing");
         } else {
-            List<String> assholes = gameDao.findPlayerThatHasJoinedMultipleGames(gameId);
+            List<String> assholes = gameDao.findPlayerThatHasJoinedMultipleGames(gameIdInt);
             if (!assholes.isEmpty()) {
                 for (int i = 0; i < assholes.size(); i++) {
-                    gameDao.removePlayer(gameId, assholes.get(i));
+                    gameDao.removePlayer(gameIdInt, assholes.get(i));
                 }
             }
-            gameDao.updateGameState(gameId, "ongoing");
+            gameDao.updateGameState(gameIdInt, "ongoing");
         }
-        request.setAttribute("game_id", gameId);
+        request.setAttribute("game_id", gameIdInt);
         request.setAttribute("username", userName);
-        request.getRequestDispatcher("Game.jsp").forward(request, response);
+        request.getRequestDispatcher("game.jsp").forward(request, response);
     }
 
     @Override

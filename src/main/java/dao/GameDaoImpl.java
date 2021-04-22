@@ -50,17 +50,15 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public void updateGameState(Integer id, String state) {
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();    //The entity gets persistant and the changes are synchronized automatically before we commit
         Game game = em.find(Game.class, id);
-        game.setGamestate(state);
-        transaction.commit();
+        game.setGamestate("ongoing");
+        em.merge(game);
     }
 
     @Override
     public boolean isInOneGame (String userName){
         List<Game> games = findAll();
-        int count = (int) games.stream().filter(e -> e.getUsername_host().equals(userName) || e.getUsername_p2().equals(userName) || e.getUsername_p3().equals(userName) || e.getUsername_p4().equals(userName) || e.getUsername_p5().equals(userName)).count();
+        int count = (int) games.stream().filter(e -> e.getUsername_host() == (userName) || e.getUsername_p2() == (userName) || e.getUsername_p3() == (userName) || e.getUsername_p4() == (userName) || e.getUsername_p5() == (userName)).count();
         return (count == 1);
     }
 
@@ -90,46 +88,36 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public void updateGameDice1 (Integer id, Integer dice1){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Game game = em.find(Game.class, id);
         game.setDice1(dice1);
-        transaction.commit();
+        em.merge(game);
     }
 
     @Override
     public void updateGameDice2 (Integer id, Integer dice2){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Game game = em.find(Game.class, id);
         game.setDice2(dice2);
-        transaction.commit();
+        em.merge(game);
     }
 
     @Override
     public void updateGameDice3 (Integer id, Integer dice3){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Game game = em.find(Game.class, id);
         game.setDice3(dice3);
-        transaction.commit();
+        em.merge(game);
     }
 
     @Override
     public void updateGameDice4 (Integer id, Integer dice4){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Game game = em.find(Game.class, id);
         game.setDice4(dice4);
-        transaction.commit();
+        em.merge(game);
     }
     @Override
     public void updateGameDice5 (Integer id, Integer dice5){
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         Game game = em.find(Game.class, id);
         game.setDice5(dice5);
-        transaction.commit();
+        em.merge(game);
     }
 
     @Override
