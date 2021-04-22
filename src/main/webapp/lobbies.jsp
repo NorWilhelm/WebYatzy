@@ -29,6 +29,17 @@
         return action_button
 
     }
+
+    function startGameButton (gameId){
+        var username = "<%=request.getAttribute("username")%>>"
+        var actionButton = "<form action = 'http://localhost:8080/WebYatzy-0.0.2/startGame' method='get'>" +
+            "<input type = 'hidden' value = " + username + " name = 'username'>" +
+            "<input type = 'hidden' value = " + gameId + " name = 'gameId'>" +
+            '<button class = "btn btn-primary btn-sm" type = "submit">Start game</button>' +
+            '</form>'
+        return actionButton;
+    }
+
     function add_lobby_row(table, game_id, host, p2, p3, p4, p5, btn) {
         new_row = "<tr scope='row'>" +
             "<td>" + game_id + "</td>" +
@@ -74,7 +85,8 @@
         var client_username = "<%=request.getAttribute("username")%>"
 
         if (host == client_username) {
-            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Start game</button>"
+            var client_action_button = startGameButton(game_id)
+                //" <button class='btn btn-primary btn-sm' type='button' value='kek'>Start game</button>"
         }
         else if ([p2, p3, p4, p5].includes(client_username) ){
             var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Leave game</button>"
@@ -137,7 +149,7 @@
          })*/
 
         // window.onload = updateLobbyList()
-    var intervalID = window.setInterval( getLobbies, 200);
+    var intervalID = window.setInterval(getLobbies, 500);
 
 
 </script>
