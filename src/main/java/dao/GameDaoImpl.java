@@ -51,6 +51,74 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
+    public void updateGameDice1 (Integer id, Integer dice1){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Game game = em.find(Game.class, id);
+        game.setDice1(dice1);
+        transaction.commit();
+    }
+
+    @Override
+    public void updateGameDice2 (Integer id, Integer dice2){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Game game = em.find(Game.class, id);
+        game.setDice2(dice2);
+        transaction.commit();
+    }
+
+    @Override
+    public void updateGameDice3 (Integer id, Integer dice3){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Game game = em.find(Game.class, id);
+        game.setDice3(dice3);
+        transaction.commit();
+    }
+
+    @Override
+    public void updateGameDice4 (Integer id, Integer dice4){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Game game = em.find(Game.class, id);
+        game.setDice4(dice4);
+        transaction.commit();
+    }
+    @Override
+    public void updateGameDice5 (Integer id, Integer dice5){
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        Game game = em.find(Game.class, id);
+        game.setDice5(dice5);
+        transaction.commit();
+    }
+
+    @Override
+    public boolean isTheTrueHost(String username) {
+        List<Game> allGames = findAll();
+        int i = 0;
+        while (i < 2){
+            for (Game g : allGames){
+                if (g.getUsername_host().equals(username)){
+                    i++;
+                }
+            }
+        }
+        switch (i) {
+            case (0):
+                System.out.println(username + " is not hosting any games!");
+                return false;
+            case (1):
+                return true;
+            case (2):
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public Game findGame(Integer id) {
         return em.find(Game.class, id);
     }

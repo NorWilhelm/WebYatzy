@@ -14,4 +14,16 @@ public class Dice {
     public int roll(){
         return (int) ((Math.random() * (6 - 1)) + 1);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getFacets() {
+        return facets;
+    }
 }

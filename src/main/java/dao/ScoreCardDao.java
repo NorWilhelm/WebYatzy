@@ -1,6 +1,7 @@
 package dao;
 
 import model.ScoreCard;
+import model.User;
 
 import java.util.List;
 
@@ -10,4 +11,5 @@ public interface ScoreCardDao {
     void createScoreCard (ScoreCard  scoreCard);
     ScoreCard findScoreCard (Integer id);
     void removeScoreCard (Integer id);
+    void updateScoreCard (Integer count, User user);
 }

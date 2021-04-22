@@ -21,6 +21,17 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void createUser(User user) {
         em.persist(user);
+    }
 
+    @Override
+    public User findUser (String username){
+       return em.find(User.class, username);
+    }
+
+    @Override
+    public void updateUserScoreCard (int count ,String userName){
+        User user = findUser(userName);
+        ScoreCardDao scDao = new ScoreCardDaoImpl();
+        scDao.updateScoreCard(count, user);
     }
 }
