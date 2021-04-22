@@ -27,4 +27,7 @@ public interface GameDao {
     void updateDice (Integer gameID, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5);
     boolean isHostingPre(String username);
     boolean isJoinedPre(String username);
+    boolean isInOneGame (String userName);
+    boolean areInOneGame (Integer id);
+    List<String> findPlayerThatHasJoinedMultipleGames(Integer id);
 }

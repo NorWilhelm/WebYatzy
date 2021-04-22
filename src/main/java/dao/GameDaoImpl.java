@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -40,7 +41,7 @@ public class GameDaoImpl implements GameDao {
         return em.createQuery("SELECT e FROM Game e where e.gamestate = :state",
         Game.class).setParameter("state", "pre_game").getResultList();
     }
-    //We assume that when state = 0 the game has been created but haven't been started yet
+    //We assume that when state = 0 the game has been created but hasn't been started yet
     @Override
     public List<Game> findOnGoing() {
         return em.createQuery("SELECT e FROM Game e where e.gamestate = :state",
@@ -54,6 +55,37 @@ public class GameDaoImpl implements GameDao {
         Game game = em.find(Game.class, id);
         game.setGamestate(state);
         transaction.commit();
+    }
+
+    @Override
+    public boolean isInOneGame (String userName){
+        List<Game> games = findAll();
+        int count = (int) games.stream().filter(e -> e.getUsername_host().equals(userName) || e.getUsername_p2().equals(userName) || e.getUsername_p3().equals(userName) || e.getUsername_p4().equals(userName) || e.getUsername_p5().equals(userName)).count();
+        return (count == 1);
+    }
+
+    @Override
+    public boolean areInOneGame(Integer id) {
+        boolean areInOneGame = true;
+        Game game = findGame(id);
+        String [] players = {game.getUsername_host(), game.getUsername_p2(), game.getUsername_p3(), game.getUsername_p3(), game.getUsername_p4(), game.getUsername_p5()};
+        for (String e : players){
+            areInOneGame = isInOneGame(e);
+        }
+        return areInOneGame;
+    }
+
+    @Override
+    public List<String> findPlayerThatHasJoinedMultipleGames(Integer id) {
+        List<String> playersInMultipleGames = new ArrayList<>();
+        Game currentGame = findGame(id);
+        String [] players = {currentGame.getUsername_host(), currentGame.getUsername_p2(), currentGame.getUsername_p3(), currentGame.getUsername_p3(), currentGame.getUsername_p4(), currentGame.getUsername_p5()};
+        for (String e : players){
+            if (!isInOneGame(e)){
+                playersInMultipleGames.add(e);
+            }
+        }
+        return playersInMultipleGames;
     }
 
     @Override
