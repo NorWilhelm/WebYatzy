@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(schema = "test_schema", name="games")
 @NamedQuery(name = "Game.findAll", query = "select t from Game t")
@@ -61,7 +63,7 @@ public class Game {
         this.player_5_scid = player_5_scid;
     }
 
-    public Game(String username_host, Integer host_scid) {
+    public Game(String username_host) {
         super();
         this.active_player = username_host;
         this.current_round = null;
@@ -76,13 +78,27 @@ public class Game {
         this.username_p4 = null;
         this.username_p5 = null;
         this.gamestate = "pre_game";
-        this.host_scid = host_scid;
+        this.host_scid = null;
         this.player_2_scid = null;
         this.player_3_scid = null;
         this.player_4_scid = null;
         this.player_5_scid = null;
     }
 
+    public List<String> getPlayers(){
+        List<String> players = new ArrayList<>();
+        if(!username_host.equals(null))
+            players.add(username_host);
+        if(!username_p2.equals(null))
+            players.add(username_p2);
+        if(!username_p3.equals(null))
+            players.add(username_p3);
+        if(!username_p4.equals(null))
+            players.add(username_p4);
+        if(!username_p5.equals(null))
+            players.add(username_p5);
+        return players;
+    }
 
     public void setGame_id(Integer game_id) {
         this.game_id = game_id;

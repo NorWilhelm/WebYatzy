@@ -18,37 +18,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/new_pre_game")
-public class PreGameServlet extends HttpServlet {
+@WebServlet("/move_player")
+public class MovePlayerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
     @EJB
     private ScoreCardDao scoreCardDao;
     @EJB
     private GameDao gameDao;
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws IOException {
-        System.out.println("New Game");
-        String username = (String) request.getParameter("username");
-        ScoreCard host_score_card = new ScoreCard();
-        scoreCardDao.createScoreCard(host_score_card);
-        Integer host_scid = host_score_card.getScore_card_id();
-
-        Game new_game = new Game(username, host_scid);
-        System.out.println(new_game.getActive_player());
-        gameDao.createGame(new_game);
+                         HttpServletResponse response) throws IOException, ServletException {
 
 
-        String game_id = (String) request.getAttribute("game_id");
+        String username = (String) request.getAttribute("username");
+        String game_id =  (String) request.getAttribute("game_id");
 
-        String text = "some teasdasdasdasdasdasdasdxt";
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        response.getWriter().write(text);
+        ScoreCard player_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(player_score_card);
+        Integer player_scid = player_score_card.getScore_card_id();
+        Game game = gameDao.findGame(Integer.parseInt(game_id));
+
+        if(game.getUsername_host().equals(username))
+            game.setHost_scid(player_scid);
+        else if(game.getUsername_p2().equals(username))
+            game.setPlayer_2_scid(player_scid);
+        else if(game.getUsername_p3().equals(username))
+            game.setPlayer_3_scid(player_scid);
+        else if(game.getUsername_p4().equals(username))
+            game.setPlayer_4_scid(player_scid);
+        else if(game.getUsername_p5().equals(username))
+            game.setPlayer_5_scid(player_scid);
+
+
+        request.setAttribute("game_id", game.getGame_id());
+        request.setAttribute("username", username);
+        request.getRequestDispatcher("games.jsp").forward(request, response);
         // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
         // String content = request.setAttribute("content", content); //
 
