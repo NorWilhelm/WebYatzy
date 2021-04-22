@@ -50,7 +50,7 @@ public class ScoreCard {
         this.total = 0;
     }
 
-   /* public ScoreCard(Integer ones, Integer twos, Integer threes, Integer fours, Integer fives, Integer sixes, Integer bonus, Integer three_kind, Integer four_kind, Integer full_house, Integer small_straight, Integer large_straight, Integer yatzy, Integer chance, Integer total) {
+    public ScoreCard(Integer ones, Integer twos, Integer threes, Integer fours, Integer fives, Integer sixes, Integer bonus, Integer three_kind, Integer four_kind, Integer full_house, Integer small_straight, Integer large_straight, Integer yatzy, Integer chance, Integer total) {
         super();
         this.ones = ones;
         this.twos = twos;
@@ -67,7 +67,7 @@ public class ScoreCard {
         this.yatzy = yatzy;
         this.chance = chance;
         this.total = total;
-    }*/
+    }
 
 
 

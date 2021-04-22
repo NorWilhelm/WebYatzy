@@ -4,7 +4,7 @@ import dao.GameDao;
 import dao.ScoreCardDao;
 import dao.UserDao;
 import model.Game;
-import model.ScoreCard;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
