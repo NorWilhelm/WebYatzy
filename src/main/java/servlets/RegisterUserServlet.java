@@ -48,6 +48,10 @@ public class RegisterUserServlet extends HttpServlet {
         } else{
             User newUser = new User(username, password);
             userDao.createUser(newUser);
+
+            request.setAttribute("username", username);
+            request.getRequestDispatcher("lobbies.jsp")
+                    .forward(request, response);
         }
 
 

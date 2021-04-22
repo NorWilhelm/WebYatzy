@@ -107,7 +107,7 @@
 
    }
         // Get lobbies
-      async function getLobbies() {
+      function getLobbies() {
            /* while(true) {*/
                 $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", retrieve_db_data)
           /*      await sleep(2000)
@@ -137,7 +137,8 @@
          })*/
 
         // window.onload = updateLobbyList()
-        getLobbies()
+    var intervalID = window.setInterval( getLobbies, 200);
+
 
 </script>
 
