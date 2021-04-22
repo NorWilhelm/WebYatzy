@@ -101,6 +101,26 @@ public class GameDaoImpl implements GameDao {
     }
 
     @Override
+    public void updateDice (Integer gameID, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5){
+        updateGameDice1(gameID, dice1);
+        updateGameDice2(gameID, dice2);
+        updateGameDice3(gameID, dice3);
+        updateGameDice4(gameID, dice4);
+        updateGameDice5(gameID, dice5);
+
+
+    }
+
+//    @Override
+//    public void advanceTurn (String username) {
+//
+//    }
+
+
+
+
+
+    @Override
     public boolean isTheTrueHost(String username) {
         List<Game> allGames = findAll();
         int i = 0;
@@ -189,5 +209,6 @@ public class GameDaoImpl implements GameDao {
 
         em.merge(game);
     }
+
 
 }

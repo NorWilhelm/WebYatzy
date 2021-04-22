@@ -4,7 +4,7 @@ import dao.*;
 import model.Game;
 import model.ScoreCard;
 import model.User;
-import utility.Util;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -76,7 +76,23 @@ public class GameServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         // TODO: Do something here... Post new content? -Or perhaps quit to startpage
-        int turns = 1;
+        Integer dice1 = (Integer) request.getAttribute("dice1");
+        Integer dice2 = (Integer) request.getAttribute("dice2");
+        Integer dice3 = (Integer) request.getAttribute("dice3");
+        Integer dice4 = (Integer) request.getAttribute("dice4");
+        Integer dice5 = (Integer) request.getAttribute("dice5");
+        Integer game_id = (Integer) request.getAttribute("game_id");
+        boolean isDone = (boolean) request.getAttribute("isDone");
+
+        gameDao.updateDice(game_id, dice1, dice2, dice3, dice4, dice5);
+        if (isDone){
+            Game game = gameDao.findGame(game_id);
+
+//            String old_active =
+
+        }
+
+        /*int turns = 1;
         int numberOfPickedDice = 0;
         int result;
         HttpSession session = request.getSession();
@@ -122,10 +138,8 @@ public class GameServlet extends HttpServlet {
 
         }
         RequestDispatcher rd = request.getRequestDispatcher("Any page that proceeds the game further");
-        rd.forward(request, response);
+        rd.forward(request, response);*/
 
-
-        String content = request.getParameter("newContent"); // The new content which shall be sent to the DB
 
     }
 }
