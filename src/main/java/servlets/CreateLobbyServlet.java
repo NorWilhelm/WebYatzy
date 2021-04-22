@@ -31,10 +31,12 @@ public class CreateLobbyServlet extends HttpServlet {
         String username = (String) request.getParameter("username");
         System.out.println("Game ID: " );
 
-        if(gameDao.isHostingPre(username)){
-            gameDao.findPlayerLobby(username);
+        while (gameDao.isJoinedPre(username))
+            gameDao.removePlayer(gameDao.findPlayerLobby(username), username);
+
+        while   (gameDao.isHostingPre(username))
             gameDao.removeGame( gameDao.findPlayerLobby(username));
-        }
+
 
 
         Game new_game = new Game(username);

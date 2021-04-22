@@ -19,6 +19,16 @@
 <body style="margin: 20px">
 
 <script>
+    function join_lobby_button(game_id){
+        var username = "<%=request.getAttribute("username")%>"
+        var action_button =  "<form action='http://localhost:8080/WebYatzy-0.0.2/join_lobby' method='get'>" +
+            "<input type='hidden' value=" + username + " name='username'>" +
+                "<input type='hidden' value=" + game_id + " name='game_id'>" +
+                    '<button class="btn btn-primary btn-sm" type="submit">Join Game</button>' +
+        '</form>'
+        return action_button
+
+    }
     function add_lobby_row(table, game_id, host, p2, p3, p4, p5, btn) {
         new_row = "<tr scope='row'>" +
             "<td>" + game_id + "</td>" +
@@ -69,34 +79,41 @@
         else if ([p2, p3, p4, p5].includes(client_username) ){
             var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Leave game</button>"
         } else {
-            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Join game</button>"
+            var client_action_button = join_lobby_button(game_id)
         }
           add_lobby_row(table, game_id, host, p2, p3, p4, p5, client_action_button)
 
         })
     }
+    async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
+   function retrieve_db_data(responseDataJSON) {
+        let preGames = []
+
+        // TODO: Send the "global" list instead of .pre_games (sends to syncView)
+        for (var lobby in responseDataJSON.pre_games)
+            preGames.push(responseDataJSON.pre_games[lobby])
+
+        //for (var lobby in responseDataJSON.ongoing_games)
+        //    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
+
+        // Perhaps not check if null, but just return when done.
+        console.log("preGames: ")
+        console.log(preGames)
+        syncView(preGames)
+
+
+   }
         // Get lobbies
-        function getLobbies() {
-            console.log("kjører getLobbies")
+      async function getLobbies() {
+           /* while(true) {*/
+                $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", retrieve_db_data)
+          /*      await sleep(2000)
+            }*/
 
-            $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
-                let preGames = []
-
-                // TODO: Send the "global" list instead of .pre_games (sends to syncView)
-                for (var lobby in responseDataJSON.pre_games)
-                    preGames.push(responseDataJSON.pre_games[lobby])
-
-                //for (var lobby in responseDataJSON.ongoing_games)
-                //    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
-
-                // Perhaps not check if null, but just return when done.
-                console.log("preGames: ")
-                console.log(preGames)
-                syncView(preGames)
-            })
         }
-
         /*function updateLobbyList() {
              console.log("updateLobbyList is running...")
             $.get("http://localhost:8080/WebYatzy-0.0.2/lobbiesServlet", function(responseDataJSON) {
@@ -144,16 +161,16 @@
 
         <tr id="singleRowId">
         </tr>
-        <c:forEach var="lobby" items="${preGames}">
+  <%--      <c:forEach var="lobby" items="${preGames}">
             <c:forEach var="item" items="lobby">
                 <tr scope="row">
                     <p>${item[1].active_player}</p>
                 </tr>
             </c:forEach>
-        </c:forEach>
+        </c:forEach>--%>
     </table>
 
-    <button class="btn btn-primary btn-sm" type="button" value="${lobby.game_id}">Join game</button>
+
 </body>
 
 </html>

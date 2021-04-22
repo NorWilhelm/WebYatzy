@@ -87,15 +87,27 @@ public class Game {
 
     public List<String> getPlayers(){
         List<String> players = new ArrayList<>();
-        if(!username_host.equals(null))
+        if(username_host != null)
             players.add(username_host);
-        if(!username_p2.equals(null))
+        if(username_p2 != null)
             players.add(username_p2);
-        if(!username_p3.equals(null))
+        if(username_p3 != null)
             players.add(username_p3);
-        if(!username_p4.equals(null))
+        if(username_p4 != null)
             players.add(username_p4);
-        if(!username_p5.equals(null))
+        if(username_p5 != null)
+            players.add(username_p5);
+        return players;
+    }
+    public List<String> getJoinedPlayers(){
+        List<String> players = new ArrayList<>();
+        if(username_p2 != null)
+            players.add(username_p2);
+        if(username_p3 != null)
+            players.add(username_p3);
+        if(username_p4 != null)
+            players.add(username_p4);
+        if(username_p5 != null)
             players.add(username_p5);
         return players;
     }

@@ -147,10 +147,19 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public boolean isHostingPre(String username) {
-        for (Game g : findPreGames()){
-            if (g.getUsername_host().equals(username))
+        for (Game game : findPreGames()){
+            if (game.getUsername_host().equals(username))
                return true;
     }
+        return false;
+    }
+
+    @Override
+    public boolean isJoinedPre(String username) {
+        for (Game game : findPreGames()){
+            if (game.getJoinedPlayers().contains(username))
+                return true;
+        }
         return false;
     }
 
@@ -163,15 +172,15 @@ public class GameDaoImpl implements GameDao {
     public Integer findPlayerLobby(String username){
         List<Game> pre_games = findPreGames();
         for(var pre_game : pre_games){
-            for(String name : fetchLobbyPlayers(pre_game.getGame_id())){
+            for(String name : pre_game.getPlayers()){
                 if (name.equals(username)){
                     return pre_game.getGame_id();
                 }
             }
         }
         List<Game> ongoing_games = findOnGoing();
-        for(var ongoing_game : ongoing_games){
-            for(String name : fetchLobbyPlayers(ongoing_game.getGame_id())){
+        for(Game ongoing_game : ongoing_games){
+            for(String name : ongoing_game.getPlayers()){
                 if (name.equals(username)){
                     return ongoing_game.getGame_id();
                 }
@@ -192,13 +201,13 @@ public class GameDaoImpl implements GameDao {
     public void removePlayer(Integer gameID, String username) {
         Game game = em.find(Game.class, gameID);
 
-        if (game.getUsername_p2().equals(username))
+        if (game.getUsername_p2() != null && game.getUsername_p2().equals(username))
             game.setUsername_p2(null);
-        else if (game.getUsername_p3().equals(username))
+        else if (game.getUsername_p3() != null && game.getUsername_p3().equals(username))
             game.setUsername_p3(null);
-        else if (game.getUsername_p4().equals(username))
+        else if (game.getUsername_p4() != null && game.getUsername_p4().equals(username))
             game.setUsername_p4(null);
-        else if (game.getUsername_p5().equals(username))
+        else if (game.getUsername_p5() != null && game.getUsername_p5().equals(username))
             game.setUsername_p5(null);
 
         em.merge(game);
@@ -208,13 +217,13 @@ public class GameDaoImpl implements GameDao {
     public void joinPlayer(Integer gameID, String username) {
         Game game = em.find(Game.class, gameID);
 
-        if (game.getUsername_p2().equals(null))
+        if (game.getUsername_p2() == null)
             game.setUsername_p2(username);
-        else if (game.getUsername_p3().equals(null))
+        else if (game.getUsername_p3() == null)
             game.setUsername_p3(username);
-        else if (game.getUsername_p4().equals(null))
+        else if (game.getUsername_p4() == null)
             game.setUsername_p4(username);
-        else if (game.getUsername_p5().equals(null))
+        else if (game.getUsername_p5() == null)
             game.setUsername_p5(username);
 
         em.merge(game);

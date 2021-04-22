@@ -27,12 +27,16 @@ public class JoinLobbyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-        String game_id =  (String) request.getAttribute("game_id");
-        String username =  (String) request.getAttribute("username");
+        String game_id =  (String) request.getParameter("game_id");
+        String username =  (String) request.getParameter("username");
+        System.out.println("Join game id " + game_id);
 
-        Integer old_lobby = gameDao.findPlayerLobby(username);
-        if (old_lobby!=(null))
-            gameDao.removePlayer(old_lobby, username);
+
+        while (gameDao.isJoinedPre(username))
+            gameDao.removePlayer(gameDao.findPlayerLobby(username), username);
+
+        while(gameDao.isHostingPre(username))
+            gameDao.removeGame(gameDao.findPlayerLobby(username));
 
         Game game = gameDao.findGame(Integer.parseInt(game_id));
         gameDao.joinPlayer(game.getGame_id(), username);
