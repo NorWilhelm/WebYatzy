@@ -65,13 +65,16 @@
             table.empty()
             table.append(headerRow)
     }
-    function syncView(preGames) {
+    function syncView(preGames, ongoing_games) {
 
         table = $("#tableId tbody")
         if ($("#tableId tbody").length == 0) {
             $("#tableId").append("<tbody></tbody>");
         }
-
+        ongoing_game_table = $("#ongoing_game_table tbody")
+        if ($("#ongoing_game_table tbody").length == 0) {
+            $("#ongoing_game_table").append("<tbody></tbody>");
+        }
         add_head_row(table)
 
         preGames.forEach(lobby => {
@@ -86,7 +89,6 @@
 
         if (host == client_username) {
             var client_action_button = startGameButton(game_id)
-                //" <button class='btn btn-primary btn-sm' type='button' value='kek'>Start game</button>"
         }
         else if ([p2, p3, p4, p5].includes(client_username) ){
             var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Leave game</button>"
@@ -94,6 +96,28 @@
             var client_action_button = join_lobby_button(game_id)
         }
           add_lobby_row(table, game_id, host, p2, p3, p4, p5, client_action_button)
+
+        })
+
+
+        add_head_row(ongoing_game_table)
+
+        ongoing_games.forEach(lobby => {
+
+            var host = lobby.username_host
+            var p2 = lobby.username_p2
+            var p3 = lobby.username_p3 // TODO: Check if null, then show join-button
+            var p4 = lobby.username_p4
+            var p5 = lobby.username_p5
+            var game_id = lobby.game_id
+            var client_username = "<%=request.getAttribute("username")%>"
+
+            if ([host, p2, p3, p4, p5].includes(client_username) ) {
+                var data = {"username":client_username, "game_id":game_id}
+                $.get("http://localhost:8080/WebYatzy-0.0.2/move_player", data)
+            }
+            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Spectate game</button>"
+            add_lobby_row(ongoing_game_table, game_id, host, p2, p3, p4, p5, client_action_button)
 
         })
     }
@@ -108,13 +132,14 @@
         for (var lobby in responseDataJSON.pre_games)
             preGames.push(responseDataJSON.pre_games[lobby])
 
-        //for (var lobby in responseDataJSON.ongoing_games)
-        //    ongoingGames.push([lobby, responseDataJSON.ongoing_games[lobby]])
+        let ongoing_games = []
+        for (var lobby in responseDataJSON.ongoing_games)
+           ongoing_games.push(responseDataJSON.ongoing_games[lobby])
 
         // Perhaps not check if null, but just return when done.
         console.log("preGames: ")
         console.log(preGames)
-        syncView(preGames)
+        syncView(preGames, ongoing_games)
 
 
    }
@@ -172,17 +197,11 @@
 
     <table class="table" id="tableId">
 
-        <tr id="singleRowId">
-        </tr>
-  <%--      <c:forEach var="lobby" items="${preGames}">
-            <c:forEach var="item" items="lobby">
-                <tr scope="row">
-                    <p>${item[1].active_player}</p>
-                </tr>
-            </c:forEach>
-        </c:forEach>--%>
     </table>
+<br/>
+<table class="table" id="ongoing_game_table">
 
+</table>
 
 </body>
 

@@ -51,7 +51,7 @@ public class GameDaoImpl implements GameDao {
     @Override
     public void updateGameState(Integer id, String state) {
         Game game = em.find(Game.class, id);
-        game.setGamestate("ongoing");
+        game.setGamestate(state);
         em.merge(game);
     }
 

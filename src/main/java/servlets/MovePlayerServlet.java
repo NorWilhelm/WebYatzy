@@ -30,8 +30,14 @@ public class MovePlayerServlet extends HttpServlet {
                          HttpServletResponse response) throws IOException, ServletException {
 
 
-        String username = (String) request.getAttribute("username");
-        String game_id =  (String) request.getAttribute("game_id");
+        String username = (String) request.getParameter("username");
+        String game_id =  (String) request.getParameter("game_id");
+
+
+        // TODO Check if player has score card for this game, and if so skip making a new
+
+        // TODO remove player from all other pre_games and ongoing_games other than this game
+
 
         ScoreCard player_score_card = new ScoreCard();
         scoreCardDao.createScoreCard(player_score_card);

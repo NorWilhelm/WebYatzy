@@ -30,9 +30,11 @@ public class StartGameServlet extends HttpServlet {
 
         String gameId = (String) request.getParameter("game_id");    //returns null TODO: answer the question: Why does it return null?
         int gameIdInt = Integer.parseInt(gameId);
-        String userName = (String) request.getParameter("username");
+
+        gameDao.updateGameState(gameIdInt, "ongoing_game");
+      /*
         if (gameDao.areInOneGame(gameIdInt)) {
-            gameDao.updateGameState(gameIdInt, "ongoing");
+            gameDao.updateGameState(gameIdInt, "ongoing_game");
         } else {
             List<String> assholes = gameDao.findPlayerThatHasJoinedMultipleGames(gameIdInt);
             if (!assholes.isEmpty()) {
@@ -40,11 +42,11 @@ public class StartGameServlet extends HttpServlet {
                     gameDao.removePlayer(gameIdInt, assholes.get(i));
                 }
             }
-            gameDao.updateGameState(gameIdInt, "ongoing");
+            gameDao.updateGameState(gameIdInt, "ongoing_game");
         }
         request.setAttribute("game_id", gameIdInt);
         request.setAttribute("username", userName);
-        request.getRequestDispatcher("/move_player").forward(request, response);
+        request.getRequestDispatcher("/move_player").forward(request, response);*/
     }
 
     @Override
