@@ -12,5 +12,16 @@ public interface GameDao {
     Game findGame (Integer id);
     void removeGame (Integer id);
     List<Game> findPreGames ();
+    List<Game> findOnGoing();
     void updateGameState (Integer id, String state);
+    void updateGameDice1(Integer id, Integer dice5);
+    void updateGameDice2(Integer id, Integer dice5);
+    void updateGameDice3(Integer id, Integer dice5);
+    void updateGameDice4(Integer id, Integer dice5);
+    void updateGameDice5(Integer id, Integer dice5);
+    boolean isTheTrueHost(String username);
+    Integer findPlayerLobby(String username);
+    List<String> fetchLobbyPlayers(Integer gameID);
+    void removePlayer(Integer gameID, String username);
+    void joinPlayer(Integer gameID, String username);
 }
