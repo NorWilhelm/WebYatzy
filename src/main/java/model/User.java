@@ -10,7 +10,7 @@ public class User {
     @Id
     private String username;
     private String password;
-    private int scoreCardId;
+
 
     public User(String username, String password) {
         this.username = username;
@@ -37,13 +37,6 @@ public class User {
         this.password = password;
     }
 
-    public int getScoreCardId() {
-        return scoreCardId;
-    }
-
-    public void setScoreCardId(int scoreCardId) {
-        this.scoreCardId = scoreCardId;
-    }
 
     @Override
     public String toString() {

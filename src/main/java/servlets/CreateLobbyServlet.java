@@ -27,17 +27,23 @@ public class CreateLobbyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-        String game_id =  (String) request.getAttribute("username");
-        if(!game_id.equals("null"))
-            return;
+        String game_id =  (String) request.getParameter("game_id");
+        String username = (String) request.getParameter("username");
+        System.out.println("Game ID: " );
 
-        String username = (String) request.getAttribute("username");
+        if(gameDao.isHostingPre(username)){
+            gameDao.findPlayerLobby(username);
+            gameDao.removeGame( gameDao.findPlayerLobby(username));
+        }
+
+
         Game new_game = new Game(username);
         System.out.println(new_game.getActive_player());
         gameDao.createGame(new_game);
 
         request.setAttribute("game_id", new_game.getGame_id());
         request.setAttribute("username", username);
+
         request.getRequestDispatcher("lobbies.jsp").forward(request, response);
     }
 

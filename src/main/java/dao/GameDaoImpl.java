@@ -144,6 +144,16 @@ public class GameDaoImpl implements GameDao {
         }
     }
 
+
+    @Override
+    public boolean isHostingPre(String username) {
+        for (Game g : findPreGames()){
+            if (g.getUsername_host().equals(username))
+               return true;
+    }
+        return false;
+    }
+
     @Override
     public Game findGame(Integer id) {
         return em.find(Game.class, id);

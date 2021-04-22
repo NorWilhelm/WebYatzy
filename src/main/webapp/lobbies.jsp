@@ -19,38 +19,60 @@
 <body style="margin: 20px">
 
 <script>
-
-    function syncView(preGames) {
-
-        table = document.getElementById("tableId")
-        headerRow = "<tr scope='row'>" +
-            "<th scope='col'>Active Player</th>" +
-            "<th scope='col'>Host user</th>" +
-            "<th scope='col'>Current Round</th>" +
+    function add_lobby_row(table, game_id, host, p2, p3, p4, p5, btn) {
+        new_row = "<tr scope='row'>" +
+            "<td>" + game_id + "</td>" +
+            "<td>" + host + "</td>" +
+            "<td>" + p2 + "</td>" +
+            "<td>" + p3 + "</td>" +
+            "<td>" + p4 + "</td>" +
+            "<td>" + p5 + "</td>" +
+            "<td>" + btn + "</td>" +
+            "</tr>"
+        table.append(new_row)
+    }
+        function add_head_row(table){
+            headerRow = "<tr scope='row'>" +
+            "<th scope='col'>Game ID</th>" +
+            "<th scope='col'>Host</th>" +
+            "<th scope='col'>Player 2</th>" +
+            "<th scope='col'>Player 3</th>" +
+            "<th scope='col'>Player 4</th>" +
+            "<th scope='col'>Player 5</th>" +
             "<th scope='col'>Action</th>" + "</tr>"
 
-        // table.empty()
-        table.append(headerRow)
-        console.log(preGames)
+            table.empty()
+            table.append(headerRow)
+    }
+    function syncView(preGames) {
+
+        table = $("#tableId tbody")
+        if ($("#tableId tbody").length == 0) {
+            $("#tableId").append("<tbody></tbody>");
+        }
+
+        add_head_row(table)
+
         preGames.forEach(lobby => {
-        var active_player = lobby.active_player
-        var username_host = lobby.username_host
-        var username_p2 = lobby.username_p2
-        var username_p3 = lobby.username_p3 // TODO: Check if null, then show join-button
-        var username_p4 = lobby.username_p4
-        var username_p5 = lobby.username_p5
+
+        var host = lobby.username_host
+        var p2 = lobby.username_p2
+        var p3 = lobby.username_p3 // TODO: Check if null, then show join-button
+        var p4 = lobby.username_p4
+        var p5 = lobby.username_p5
         var game_id = lobby.game_id
-        // var client_username = "<%=request.getAttribute("username")%>"
-        /*if (username_host == client_username) {
-            // TODO: Add Start game button.
-            // TODO
-            console.log("User is host")
-        }*/
-        console.log("active player: ")
-        console.log(lobby)
-        row = "<tr scope='row'>" +
-            "<td>" + lobby.active_player + "</th>"
-        table.append(row)
+        var client_username = "<%=request.getAttribute("username")%>"
+
+        if (host == client_username) {
+            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Start game</button>"
+        }
+        else if ([p2, p3, p4, p5].includes(client_username) ){
+            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Leave game</button>"
+        } else {
+            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Join game</button>"
+        }
+          add_lobby_row(table, game_id, host, p2, p3, p4, p5, client_action_button)
+
         })
     }
 
@@ -107,6 +129,7 @@
 
         <form action="http://localhost:8080/WebYatzy-0.0.2/create_lobby" method="get">
             <input type="hidden" value="<%=request.getAttribute("username")%>" name="username">
+            <input type="hidden" value="<%=request.getAttribute("game_id")%>" name="game_id">
             <button class="btn btn-primary btn-sm" type="submit">Create Game</button>
         </form>
         <button class="btn btn-primary btn-sm" onclick="print(${preGames})">Print games to PDF</button>

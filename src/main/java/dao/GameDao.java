@@ -25,4 +25,5 @@ public interface GameDao {
     void removePlayer(Integer gameID, String username);
     void joinPlayer(Integer gameID, String username);
     void updateDice (Integer gameID, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5);
+    boolean isHostingPre(String username);
 }
