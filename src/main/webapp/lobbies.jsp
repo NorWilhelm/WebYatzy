@@ -16,7 +16,7 @@
 </head>
 
 <!-- <body onload="updateLobbyList()"> -->
-<body style="margin: 20px">'
+<body style="margin: 20px">
 
 <script>
 
@@ -31,27 +31,28 @@
 
         // table.empty()
         table.append(headerRow)
-
-        for (var lobby in preGames) {
-            var active_player = lobby.active_player
-            var username_host = lobby.username_host
-            var username_p2 = lobby.username_p2
-            var username_p3 = lobby.username_p3 // TODO: Check if null, then show join-button
-            var username_p4 = lobby.username_p4
-            var username_p5 = lobby.username_p5
-            var game_id = lobby.game_id
-            // var client_username = "<%=request.getAttribute("username")%>"
-            /*if (username_host == client_username) {
-                // TODO: Add Start game button.
-                // TODO
-                console.log("User is host")
-            }*/
-            row = "<tr scope='row'>" +
-                "<td>${active_player}</th>" +
-                "<td>${username_host}</td>" +
-                "<td>${username_p2}</td>" +
-                "<td>${game_id}</td>" + "</tr>"
-        }
+        console.log(preGames)
+        preGames.forEach(lobby => {
+        var active_player = lobby.active_player
+        var username_host = lobby.username_host
+        var username_p2 = lobby.username_p2
+        var username_p3 = lobby.username_p3 // TODO: Check if null, then show join-button
+        var username_p4 = lobby.username_p4
+        var username_p5 = lobby.username_p5
+        var game_id = lobby.game_id
+        // var client_username = "<%=request.getAttribute("username")%>"
+        /*if (username_host == client_username) {
+            // TODO: Add Start game button.
+            // TODO
+            console.log("User is host")
+        }*/
+        console.log("active player: ")
+        console.log(lobby)
+        row = "<tr scope='row'>" +
+            "<td>" + lobby.active_player + "</th>"
+        table.append(row)
+        })
+    }
 
         // Get lobbies
         function getLobbies() {
@@ -98,7 +99,6 @@
 
         // window.onload = updateLobbyList()
         getLobbies()
-    }
 
 </script>
 
