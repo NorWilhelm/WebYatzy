@@ -147,6 +147,8 @@ public class LobbyListServlet extends HttpServlet {
         response_data_map.put("ongoing_games", ongoing_games_map);
         String json = new Gson().toJson(response_data_map);
 
+        String username = request.getParameter("username");
+        request.setAttribute("username", username);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

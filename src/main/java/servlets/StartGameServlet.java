@@ -25,28 +25,44 @@ public class StartGameServlet extends HttpServlet {
 
     @EJB
     private GameDao gameDao;
+    @EJB
+    private ScoreCardDao scoreCardDao;
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
 
-        String gameId = (String) request.getParameter("game_id");    //returns null TODO: answer the question: Why does it return null?
-        int gameIdInt = Integer.parseInt(gameId);
+        Integer game_id =  Integer.parseInt(request.getParameter("game_id"));
+        System.out.println("STARTGAME");
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
 
-        gameDao.updateGameState(gameIdInt, "ongoing_game");
-      /*
-        if (gameDao.areInOneGame(gameIdInt)) {
-            gameDao.updateGameState(gameIdInt, "ongoing_game");
-        } else {
-            List<String> assholes = gameDao.findPlayerThatHasJoinedMultipleGames(gameIdInt);
-            if (!assholes.isEmpty()) {
-                for (int i = 0; i < assholes.size(); i++) {
-                    gameDao.removePlayer(gameIdInt, assholes.get(i));
-                }
-            }
-            gameDao.updateGameState(gameIdInt, "ongoing_game");
-        }
-        request.setAttribute("game_id", gameIdInt);
-        request.setAttribute("username", userName);
-        request.getRequestDispatcher("/move_player").forward(request, response);*/
+        String username = request.getParameter("username");
+        System.out.println("Username :" + username);
+        System.out.println("Username :" + username);
+        ScoreCard host_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(host_score_card);
+        ScoreCard p2_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(p2_score_card);
+        ScoreCard p3_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(p3_score_card);
+        ScoreCard p4_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(p4_score_card);
+        ScoreCard p5_score_card = new ScoreCard();
+        scoreCardDao.createScoreCard(p5_score_card);
+
+        Integer host_scid = host_score_card.getScore_card_id();
+        Integer p2_scid = p2_score_card.getScore_card_id();
+        Integer p3_scid = p3_score_card.getScore_card_id();
+        Integer p4_scid = p4_score_card.getScore_card_id();
+        Integer p5_scid = p5_score_card.getScore_card_id();
+
+
+        gameDao.startGame(game_id, host_scid, p2_scid, p3_scid, p4_scid, p5_scid);
+
+        request.setAttribute("username", username);
+        request.setAttribute("game_id", game_id);
+        System.out.println("Start game finished1");
+        request.getRequestDispatcher("/game_session.jsp").forward(request, response);
+        System.out.println("Start game finished2");
     }
 
     @Override

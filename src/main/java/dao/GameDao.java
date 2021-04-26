@@ -30,4 +30,12 @@ public interface GameDao {
     boolean isInOneGame (String userName);
     boolean areInOneGame (Integer id);
     List<String> findPlayerThatHasJoinedMultipleGames(Integer id);
-}
+    void progressTurn(Integer gameID);
+    void updateDiceThrow(Integer gameID);
+    void startGame(Integer gameID, Integer host_scid, Integer p2_scid, Integer p3_scid, Integer p4_scid, Integer p5_scid);
+    void updateDiceState1(Integer gameID, boolean is_kept );
+    void updateDiceState2(Integer gameID, boolean is_kept );
+    void updateDiceState3(Integer gameID, boolean is_kept );
+    void updateDiceState4(Integer gameID, boolean is_kept );
+    void updateDiceState5(Integer gameID, boolean is_kept );
+    }

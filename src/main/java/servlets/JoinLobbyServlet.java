@@ -31,7 +31,6 @@ public class JoinLobbyServlet extends HttpServlet {
         String username =  (String) request.getParameter("username");
         System.out.println("Join game id " + game_id);
 
-
         while (gameDao.isJoinedPre(username))
             gameDao.removePlayer(gameDao.findPlayerLobby(username), username);
 

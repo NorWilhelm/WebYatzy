@@ -11,5 +11,6 @@ public interface ScoreCardDao {
     void createScoreCard (ScoreCard  scoreCard);
     ScoreCard findScoreCard (Integer id);
     void removeScoreCard (Integer id);
+    void updateScore(Integer scorecard_id, Integer round, Integer score);
 
 }

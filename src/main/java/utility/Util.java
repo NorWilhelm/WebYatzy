@@ -1,8 +1,33 @@
 package utility;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 public class Util {
+    public static Map<Integer, String> round_map = new HashMap<>();
+    static {
 
+        round_map.put(1, "Ones");
+        round_map.put(2, "Twos");
+        round_map.put(3, "Threes");
+        round_map.put(4, "Fours");
+        round_map.put(5, "Fives");
+        round_map.put(6, "Sixes");
+        round_map.put(7, "Bonus");
+        round_map.put(8, "Three of a Kind");
+        round_map.put(9, "Four of a Kind");
+        round_map.put(10, "Full House");
+        round_map.put(11, "Small Straight");
+        round_map.put(12, "Large Straight");
+        round_map.put(13, "Yatzy");
+        round_map.put(14, "Chance");
+        round_map.put(15, "Total Score");
+    }
 
+    public static int diceRoll(){
+        return new Random().nextInt(6) + 1;
+    }
     public static int calculateScore(int round, int dice1, int dice2, int dice3, int dice4, int dice5) {
         int[] dice = {dice1, dice2, dice3, dice4, dice5};
         int score = 0;

@@ -33,6 +33,13 @@ public class ScoreCardDaoImpl implements ScoreCardDao {
         assert foundScoreCard != null : "The card with id " + id + " hasn't been found in the database!";
     }
 
+    @Override
+    public void updateScore(Integer scorecard_id, Integer round, Integer score){
+        ScoreCard score_card = findScoreCard(scorecard_id);
+        score_card.setScoreFromRound(round, score);
+        em.merge(score_card);
+    }
+
 //    @Override
 //    public void updateScoreCard (Integer count, User user) {
 //        EntityTransaction transaction = em.getTransaction();

@@ -28,49 +28,47 @@ public class MovePlayerServlet extends HttpServlet {
     private GameDao gameDao;
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException, ServletException {
-
-
-        String username = (String) request.getParameter("username");
-        String game_id =  (String) request.getParameter("game_id");
-
-
-        // TODO Check if player has score card for this game, and if so skip making a new
-
-        // TODO remove player from all other pre_games and ongoing_games other than this game
-
-
-        ScoreCard player_score_card = new ScoreCard();
-        scoreCardDao.createScoreCard(player_score_card);
-        Integer player_scid = player_score_card.getScore_card_id();
-        Game game = gameDao.findGame(Integer.parseInt(game_id));
-
-        if(game.getUsername_host().equals(username))
-            game.setHost_scid(player_scid);
-        else if(game.getUsername_p2().equals(username))
-            game.setPlayer_2_scid(player_scid);
-        else if(game.getUsername_p3().equals(username))
-            game.setPlayer_3_scid(player_scid);
-        else if(game.getUsername_p4().equals(username))
-            game.setPlayer_4_scid(player_scid);
-        else if(game.getUsername_p5().equals(username))
-            game.setPlayer_5_scid(player_scid);
-
-
-        request.setAttribute("game_id", game.getGame_id());
-        request.setAttribute("username", username);
-        request.getRequestDispatcher("games.jsp").forward(request, response);
-        // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
-        // String content = request.setAttribute("content", content); //
-
+        request.getRequestDispatcher("lobbies.jsp")
+                .forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // TODO: Do something here... Post new content? -Or perhaps quit to startpage
+        System.out.println("MOVE PLAYER");
+        String username = (String) request.getParameter("username");
+        String game_id =  (String) request.getParameter("game_id");
 
-        String content = request.getParameter("newContent"); // The new content which shall be sent to the DB
+        System.out.println("STARTGAME");
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
+        System.out.println("GAME ID :" +game_id);
 
+        System.out.println("Username :" + username);
+        System.out.println("Username :" + username);
+        System.out.println("Username :" + username);
+        System.out.println("Username :" + username);
+        System.out.println("Username :" + username);
+        // TODO Check if player has score card for this game, and if so skip making a new
+
+        // TODO remove player from all other pre_games and ongoing_games other than this game
+
+
+
+
+        response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        response.getWriter().write(username);
+
+        request.setAttribute("game_id", game_id);
+        request.setAttribute("username", username);
+
+        // String gameID = request.setAttribute("gameID", "2"); // TODO: Get the data from DB - For now, gameID is just a placeholder object
+        // String content = request.setAttribute("content", content); //
+        System.out.println("Move finished ");
     }
 }

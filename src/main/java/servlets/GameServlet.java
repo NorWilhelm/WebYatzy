@@ -1,9 +1,11 @@
 package servlets;
 
+import com.google.gson.Gson;
 import dao.*;
 import model.Game;
 import model.ScoreCard;
 import model.User;
+import utility.Util;
 
 
 import java.io.IOException;
@@ -34,111 +36,144 @@ public class GameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
 
-        Integer game_id = Integer.parseInt((String)request.getAttribute("game_id"));
-        List<Game> games = gameDao.findAll();
+        Integer game_id = Integer.parseInt((String)request.getParameter("game_id"));
 
-        Game target_game = null;
-        for(Game game : games){
-            if (game.getGame_id().equals(game_id)){
-                target_game = game;
-                break;
-            }
-        }
-        Map<String, Map<String, String>> response_data_map = new HashMap<>();
+
+        Game game = gameDao.findGame(game_id);
+        List<List> rounds = new ArrayList<>();
+        Integer player_amount = game.playerAmount();
+        Integer current_round = game.getCurrent_round();
+
+        Map<String, Object> response_data_map = new HashMap<>();
 
         List<ScoreCard> score_cards = new ArrayList<>();
-        Integer host_scid = target_game.getHost_scid();
+        Integer host_scid = game.getHost_scid();
         score_cards.add(scoreCardDao.findScoreCard(host_scid));
 
-                Integer player_2_scid = target_game.getPlayer_2_scid();
+        Integer player_2_scid = game.getPlayer_2_scid();
         if (player_2_scid != null ){
             score_cards.add( scoreCardDao.findScoreCard(player_2_scid));
         }
-        Integer player_3_scid = target_game.getPlayer_3_scid();
+
+        Integer player_3_scid = game.getPlayer_3_scid();
         if (player_3_scid != null ){
             score_cards.add( scoreCardDao.findScoreCard(player_3_scid));
         }
-        Integer player_4_scid = target_game.getPlayer_4_scid();
+
+        Integer player_4_scid = game.getPlayer_4_scid();
         if (player_4_scid != null ){
             score_cards.add( scoreCardDao.findScoreCard(player_4_scid));
         }
-        Integer player_5_scid = target_game.getPlayer_5_scid();
+
+        Integer player_5_scid = game.getPlayer_5_scid();
         if (player_5_scid != null ){
             score_cards.add( scoreCardDao.findScoreCard(player_5_scid));
         }
 
 
+        for(int i = 1; i <= current_round.intValue(); i++){
+            List<String> round = new ArrayList<>();
+            round.add(Util.round_map.get(i));
+            for(ScoreCard score_card :score_cards ){
+                Integer round_score = score_card.getScoreFromMap(i);
+                if (round_score == null){
+                    continue;
+                }
+                round.add(round_score.toString());
+            }
+            rounds.add(round);
 
+        }
+
+        response_data_map.put("active_player", game.getActive_player());
+        response_data_map.put("rounds", rounds);
+        response_data_map.put("player_amount", player_amount.toString());
+        response_data_map.put("dice_1", game.getDice1().toString());
+        response_data_map.put("dice_2", game.getDice2().toString());
+        response_data_map.put("dice_3", game.getDice3().toString());
+        response_data_map.put("dice_4", game.getDice4().toString());
+        response_data_map.put("dice_5", game.getDice5().toString());
+        response_data_map.put("host", game.getUsername_host());
+        response_data_map.put("p2", game.getUsername_p2());
+        response_data_map.put("p3", game.getUsername_p3());
+        response_data_map.put("p4", game.getUsername_p4());
+        response_data_map.put("p5", game.getUsername_p5());
+        response_data_map.put("current_round",Util.round_map.get(current_round));
+        String json = new Gson().toJson(response_data_map);
+
+        request.setAttribute("game_id", game.getGame_id().toString());
+        String username = request.getParameter("username");
+        request.setAttribute("username", username);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // TODO: Do something here... Post new content? -Or perhaps quit to startpage
-        Integer dice1 = (Integer) request.getAttribute("dice1");
-        Integer dice2 = (Integer) request.getAttribute("dice2");
-        Integer dice3 = (Integer) request.getAttribute("dice3");
-        Integer dice4 = (Integer) request.getAttribute("dice4");
-        Integer dice5 = (Integer) request.getAttribute("dice5");
-        Integer game_id = (Integer) request.getAttribute("game_id");
-        boolean isDone = (boolean) request.getAttribute("isDone");
 
-        gameDao.updateDice(game_id, dice1, dice2, dice3, dice4, dice5);
-        if (isDone){
-            Game game = gameDao.findGame(game_id);
+        Integer game_id = Integer.parseInt(request.getParameter("game_id"));
+        Game game = gameDao.findGame(game_id);
+        Integer current_round = game.getCurrent_round();
+        Integer current_throw = game.getCurrent_throw();
+        String username = request.getParameter("username");
 
-//            String old_active =
+        boolean is_done = (request.getParameter("is_done") != null);
+        boolean is_roll = (request.getParameter("is_roll") != null);
+        if( is_done || current_throw==3){
 
-        }
+            Integer dice_1 = Math.abs(game.getDice1());
+            Integer dice_2 = Math.abs(game.getDice2());
+            Integer dice_3 = Math.abs(game.getDice3());
+            Integer dice_4 = Math.abs(game.getDice4());
+            Integer dice_5 = Math.abs(game.getDice5());
+            Integer score = Util.calculateScore(game.getCurrent_round(), dice_1, dice_2, dice_3, dice_4, dice_5);
+            Integer scorecard_id = game.getScorecardFromUser(username);
+            scoreCardDao.updateScore(scorecard_id, current_round, score);
+            gameDao.progressTurn(game_id);
 
-        /*int turns = 1;
-        int numberOfPickedDice = 0;
-        int result;
-        HttpSession session = request.getSession();
-        GameDaoImpl gameDao = new GameDaoImpl();    //I propose to merge interface and Impl classes into a static class
-        Game game = gameDao.findGame((int) session.getAttribute("gameId"));  //or whatever way we can get the id of an ongoing game we are interested in
-        String activePlayerString = game.getActive_player();
-        UserDaoImpl userDao = new UserDaoImpl();
-        while ((turns <= 3) && (numberOfPickedDice < 5)) {
-            Integer dice1 = (Integer) request.getAttribute("dice1");
-            Integer dice2 = (Integer) request.getAttribute("dice2");
-            Integer dice3 = (Integer) request.getAttribute("dice3");
-            Integer dice4 = (Integer) request.getAttribute("dice4");
-            Integer dice5 = (Integer) request.getAttribute("dice5");
-            Integer[] diceArray = {dice1, dice2, dice3, dice4, dice5};
-            game.setCurrent_round(turns);
-            for (int i = 0; i < 5; i++) {
-                if (diceArray[i] != null) {
-                    switch (i) {
-                        case (1):
-                            game.setDice1(diceArray[i]);
-                            gameDao.updateGameDice1(game.getGame_id(), game.getDice1());
-                        case (2):
-                            game.setDice2(diceArray[i]);
-                            gameDao.updateGameDice2(game.getGame_id(), game.getDice2());
-                        case (3):
-                            game.setDice3(diceArray[i]);
-                            gameDao.updateGameDice3(game.getGame_id(), game.getDice3());
-                        case (4):
-                            game.setDice4(diceArray[i]);
-                            gameDao.updateGameDice4(game.getGame_id(), game.getDice4());
-                        case (5):
-                            game.setDice5(diceArray[i]);
-                            gameDao.updateGameDice5(game.getGame_id(), game.getDice5());
-                    }
-                    numberOfPickedDice++;
-                }
+        } else if( is_roll) {
+
+            gameDao.updateDiceThrow(game_id);
+
+        } else{
+
+            boolean dice_1_state_changed = (request.getParameter("dice_1") != null);
+
+            if(dice_1_state_changed){
+                System.out.println("DICE 1 param" + request.getParameter("dice_1"));
+                boolean dice_selected = (request.getParameter("dice_1").equals("keep"));
+                gameDao.updateDiceState1(game_id,dice_selected);
             }
-            //Hopefully, we deal with null/0 values in the class below
-            result = Util.calculateScore(turns, game.getDice1(), game.getDice2(), game.getDice3(), game.getDice4(), game.getDice5());
-            request.setAttribute("resultRound" + turns, result);
-            userDao.updateUserScoreCard(result, activePlayerString);    //that was pretty confusing, needs to be double checked
-            turns++;
+            boolean dice_2_state_changed = (request.getParameter("dice_2") != null);
+            if(dice_2_state_changed){
+                System.out.println("DICE 2 param" + request.getParameter("dice_2"));
+                boolean dice_selected = (request.getParameter("dice_2").equals("keep"));
+                gameDao.updateDiceState2(game_id,dice_selected);
+            }
+            boolean dice_3_state_changed = (request.getParameter("dice_3") != null);
+            if(dice_3_state_changed){
+                boolean dice_selected = (request.getParameter("dice_3").equals("keep"));
+                gameDao.updateDiceState3(game_id,dice_selected);
+            }
+            boolean dice_4_state_changed = (request.getParameter("dice_4") != null);
+            if(dice_4_state_changed){
+                boolean dice_selected = (request.getParameter("dice_4").equals("keep"));
+                gameDao.updateDiceState4(game_id,dice_selected);
+            }
+            boolean dice_5_state_changed= (request.getParameter("dice_5") != null);
+            if(dice_5_state_changed){
+                boolean dice_selected = (request.getParameter("dice_5").equals("keep"));
+                gameDao.updateDiceState5(game_id, dice_selected);
+            }
 
         }
-        RequestDispatcher rd = request.getRequestDispatcher("Any page that proceeds the game further");
-        rd.forward(request, response);*/
+
+        request.setAttribute("game_id", game_id);
+        request.setAttribute("username", username);
+        request.getRequestDispatcher("game_session.jsp").forward(request, response);
 
 
     }

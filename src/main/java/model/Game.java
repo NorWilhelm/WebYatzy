@@ -2,7 +2,9 @@ package model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Table(schema = "test_schema", name="games")
 @NamedQuery(name = "Game.findAll", query = "select t from Game t")
@@ -37,11 +39,14 @@ public class Game {
     private Integer player_4_scid;
     private Integer player_5_scid;
 
+
+    private Integer current_throw;
+
     public Game () {
 
     }
 
-    public Game(String active_player, Integer current_round, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5, String username_host, String username_p2, String username_p3, String username_p4, String username_p5, String gamestate, Integer host_scid, Integer player_2_scid, Integer player_3_scid, Integer player_4_scid, Integer player_5_scid) {
+    public Game(String active_player, Integer current_round, Integer dice1, Integer dice2, Integer dice3, Integer dice4, Integer dice5, String username_host, String username_p2, String username_p3, String username_p4, String username_p5, String gamestate, Integer host_scid, Integer player_2_scid, Integer player_3_scid, Integer player_4_scid, Integer player_5_scid, Integer current_throw) {
         super();
         this.active_player = active_player;
         this.current_round = current_round;
@@ -61,6 +66,7 @@ public class Game {
         this.player_3_scid = player_3_scid;
         this.player_4_scid = player_4_scid;
         this.player_5_scid = player_5_scid;
+        this.current_throw = current_throw;
     }
 
     public Game(String username_host) {
@@ -83,6 +89,7 @@ public class Game {
         this.player_3_scid = null;
         this.player_4_scid = null;
         this.player_5_scid = null;
+        this.current_throw = 0;
     }
 
     public List<String> getPlayers(){
@@ -110,6 +117,41 @@ public class Game {
         if(username_p5 != null)
             players.add(username_p5);
         return players;
+    }
+    public Integer getScorecardFromUser(String username){
+        Map<String, Integer> scorecard_map = new HashMap<>();
+
+        scorecard_map.put(this.username_host, this.host_scid);
+        if(this.username_p2 != null)
+            scorecard_map.put(this.username_p2, this.player_2_scid);
+        if(this.username_p3 != null)
+            scorecard_map.put(this.username_p3, this.player_3_scid);
+        if(this.username_p4 != null)
+            scorecard_map.put(this.username_p4, this.player_4_scid);
+        if(this.username_p5 != null)
+            scorecard_map.put(this.username_p5, this.player_5_scid);
+
+        return scorecard_map.get(username);
+    }
+
+
+
+    public Integer playerAmount(){
+        Integer player_amount = 1;
+
+        if (this.player_2_scid != null )
+            player_amount++;
+
+        if (this.player_3_scid != null )
+            player_amount++;
+
+        if (this.player_4_scid != null )
+            player_amount++;
+
+        if (this.player_5_scid != null )
+            player_amount++;
+
+        return player_amount;
     }
 
     public void setGame_id(Integer game_id) {
@@ -264,6 +306,13 @@ public class Game {
         this.player_5_scid = player_5_scid;
     }
 
+    public Integer getCurrent_throw() {
+        return current_throw;
+    }
+
+    public void setCurrent_throw(Integer current_throw) {
+        this.current_throw = current_throw;
+    }
     @Override
     public String toString() {
         return "GameMetadata{" +

@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Table(schema = "test_schema", name="score_cards")
 @NamedQuery(name = "ScoreCard.findAll", query = "select t from ScoreCard t")
@@ -29,6 +31,9 @@ public class ScoreCard {
     private Integer yatzy;
     private Integer chance;
     private Integer total;
+
+
+
 
 
     public ScoreCard(){
@@ -69,7 +74,78 @@ public class ScoreCard {
         this.total = total;
     }
 
+    public Integer getScoreFromMap(Integer round){
+        Map<Integer, Integer> round_map = new HashMap<>();
 
+
+            round_map.put(1, this.ones);
+            round_map.put(2, this.twos);
+            round_map.put(3, this.threes);
+            round_map.put(4, this.fours);
+            round_map.put(5, this.fives );
+            round_map.put(6, this.sixes);
+            round_map.put(7, this.bonus );
+            round_map.put(8, this.three_kind);
+            round_map.put(9, this.four_kind);
+            round_map.put(10, this.full_house);
+            round_map.put(11, this.small_straight);
+            round_map.put(12, this.large_straight);
+            round_map.put(13, this.yatzy);
+            round_map.put(14,  this.chance);
+            round_map.put(15,  this.total );
+            return round_map.get(round);
+    }
+    public void setScoreFromRound(Integer round, Integer score){
+        switch(round) {
+            case 1:
+                this.ones = score;
+                break;
+            case 2:
+                this.twos = score;
+                break;
+            case 3:
+                this.threes = score;
+                break;
+            case 4:
+                this.fours = score;
+                break;
+            case 5:
+                this.fives = score;
+                break;
+            case 6:
+                this.sixes = score;
+                break;
+            case 7:
+                this.bonus = score;
+                break;
+            case 8:
+                this.three_kind = score;
+                break;
+            case 9:
+                this.four_kind = score;
+                break;
+            case 10:
+                this.full_house = score;
+                break;
+            case 11:
+                this.small_straight = score;
+                break;
+            case 12:
+                this.large_straight = score;
+                break;
+            case 13:
+                this.yatzy = score;
+                break;
+            case 14:
+                this.chance = score;
+                break;
+            case 15:
+                this.total = score;
+                break;
+            default:
+        }
+
+    }
 
     public void setScore_card_id(Integer score_card_id) {
         this.score_card_id = score_card_id;

@@ -1,8 +1,10 @@
 package dao;
 
 import model.Game;
+import model.ScoreCard;
 import model.User;
 import org.hibernate.Session;
+import utility.Util;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -248,6 +250,126 @@ public class GameDaoImpl implements GameDao {
 
         em.merge(game);
     }
+    @Override
+    public void updateDiceState1(Integer gameID, boolean is_kept ) {
+        Game game = findGame(gameID);
+        if (is_kept){
+            game.setDice1(Math.abs(game.getDice1()) * -1);
+        } else{
+            game.setDice1(Math.abs(game.getDice1()));}
+        em.merge(game);
+    }
+    @Override
+    public void updateDiceState2(Integer gameID, boolean is_kept ) {
+        Game game = findGame(gameID);
+        if (is_kept){
+            game.setDice2(Math.abs(game.getDice2()) * -1);
+        } else{
+            game.setDice2(Math.abs(game.getDice2()));}
+        em.merge(game);
+    }
 
+    @Override
+    public void updateDiceState3(Integer gameID, boolean is_kept ) {
+        Game game = findGame(gameID);
+        if (is_kept){
+            game.setDice3(Math.abs(game.getDice3()) * -1);
+        } else{
+            game.setDice3(Math.abs(game.getDice3()));}
+        em.merge(game);
+    }
+    @Override
+    public void updateDiceState4(Integer gameID, boolean is_kept ) {
+        Game game = findGame(gameID);
+        if (is_kept){
+            game.setDice4(Math.abs(game.getDice4()) * -1);
+        } else{
+            game.setDice4(Math.abs(game.getDice4()));}
+        em.merge(game);
+    }
+    @Override
+    public void updateDiceState5(Integer gameID, boolean is_kept ) {
+        Game game = findGame(gameID);
+        if (is_kept){
+            game.setDice5(Math.abs(game.getDice5()) * -1);
+        } else{
+            game.setDice5(Math.abs(game.getDice5()));}
+        em.merge(game);
+    }
+
+
+    @Override
+    public void updateDiceThrow(Integer gameID ) {
+        Game game = findGame(gameID);
+
+        if (game.getDice1() > 0){
+            game.setDice1(Util.diceRoll());
+        }
+        if (game.getDice2() > 0){
+            game.setDice2(Util.diceRoll());
+        }
+        if (game.getDice3() > 0){
+            game.setDice3(Util.diceRoll());
+        }
+        if (game.getDice4() > 0){
+            game.setDice4(Util.diceRoll());
+        }
+        if (game.getDice5() > 0){
+            game.setDice5(Util.diceRoll());
+        }
+
+        game.setCurrent_throw(game.getCurrent_throw() + 1);
+        em.merge(game);
+    }
+
+    @Override
+    public void progressTurn(Integer gameID) {
+        Game game = findGame(gameID);
+        game.setCurrent_throw(1);
+        game.setDice1(Util.diceRoll());
+        game.setDice2(Util.diceRoll());
+        game.setDice3(Util.diceRoll());
+        game.setDice4(Util.diceRoll());
+        game.setDice5(Util.diceRoll());
+        String active_player = game.getActive_player();
+        List<String> players = game.getPlayers();
+        String last_player = players.get(players.size()-1);
+
+        if(active_player.equals(last_player)){
+            game.setCurrent_round(game.getCurrent_round() + 1);
+            game.setActive_player(players.get(0));
+        } else {
+            String next_player = players.get(players.lastIndexOf(active_player) + 1);
+            game.setActive_player(next_player);
+        }
+
+        if(game.getCurrent_round() == 16){
+            game.setGamestate("post_game");
+        }
+        em.merge(game);
+
+    }
+
+    @Override
+    public void startGame(Integer gameID, Integer host_scid, Integer p2_scid, Integer p3_scid, Integer p4_scid, Integer p5_scid) {
+        Game game = findGame(gameID);
+        game.setGamestate("ongoing_game");
+        game.setHost_scid(host_scid);
+        game.setPlayer_2_scid(p2_scid);
+        game.setPlayer_3_scid(p3_scid);
+        game.setPlayer_4_scid(p4_scid);
+        game.setPlayer_5_scid(p5_scid);
+        game.setCurrent_throw(1);
+        game.setCurrent_round(1);
+        game.setDice1(Util.diceRoll());
+        game.setDice2(Util.diceRoll());
+        game.setDice3(Util.diceRoll());
+        game.setDice4(Util.diceRoll());
+        game.setDice5(Util.diceRoll());
+        em.merge(game);
+
+
+
+    }
 
 }
