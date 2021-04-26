@@ -157,7 +157,7 @@ public class GameServlet extends HttpServlet {
         } else if( is_roll) {
 
 
-            if(current_throw==4){
+            if(current_throw==3){
                 Integer dice_1 = Math.abs(game.getDice1());
                 Integer dice_2 = Math.abs(game.getDice2());
                 Integer dice_3 = Math.abs(game.getDice3());
