@@ -85,7 +85,7 @@ public class Util {
         /* calculation for FOUR OF A KIND */
         if (round == 9) {
             sort(dice);
-            if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3]) || (dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4])) {
+            if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3]) || (dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4]) || (dice[0] == dice[4] && dice[1] == dice[0] && dice[2] == dice[1] && dice[3] == dice[2])) {
                 for (int i = 0; i < dice.length; i++) {
                     score += dice[i];
                 }
