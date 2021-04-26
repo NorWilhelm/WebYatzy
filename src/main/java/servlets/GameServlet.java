@@ -138,11 +138,13 @@ public class GameServlet extends HttpServlet {
             Integer scorecard_id = game.getScorecardFromUser(username);
             scoreCardDao.calcTotal(scorecard_id);
             gameDao.progressTurn(game_id);
+
+
+        } else if( current_round == 16){
+
             request.setAttribute("game_id", game_id);
             request.setAttribute("username", username);
-            request.getRequestDispatcher("lobbies.jsp").forward(request, response);
-
-        } else if( is_done){
+            request.getRequestDispatcher("lobbies.jsp").forward(request, response);} else if( is_done){
 
             Integer dice_1 = Math.abs(game.getDice1());
             Integer dice_2 = Math.abs(game.getDice2());
