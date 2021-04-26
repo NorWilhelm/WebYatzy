@@ -39,6 +39,16 @@
             '</form>'
         return actionButton;
     }
+    function spectate_button(game_id){
+        var username = "<%=request.getAttribute("username")%>"
+        var spectate_button =  "<form action='http://localhost:8080/WebYatzy-0.0.2/game_session.jsp' method='get'>" +
+            "<input type='hidden' value=" + username + " name='username'>" +
+            "<input type='hidden' value=" + game_id + " name='game_id'>" +
+            '<button class="btn btn-primary btn-sm" type="submit">Spectate Game</button>' +
+            '</form>'
+        return spectate_button
+
+    }
 
     function add_lobby_row(table, game_id, host, p2, p3, p4, p5, btn) {
         new_row = "<tr scope='row'>" +
@@ -121,7 +131,7 @@
 
                 });
             }
-            var client_action_button = " <button class='btn btn-primary btn-sm' type='button' value='kek'>Spectate game</button>"
+            var client_action_button = spectate_button(game_id)
             add_lobby_row(ongoing_game_table, game_id, host, p2, p3, p4, p5, client_action_button)
 
         })
