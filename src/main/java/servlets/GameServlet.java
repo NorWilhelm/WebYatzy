@@ -115,10 +115,26 @@ public class GameServlet extends HttpServlet {
 
 
         Integer game_id = Integer.parseInt(request.getParameter("game_id"));
+        String username = request.getParameter("username");
+
         Game game = gameDao.findGame(game_id);
         Integer current_round = game.getCurrent_round();
+        if( current_round ==7){
+            // Todo:  calc bonus
+            Integer scorecard_id = game.getScorecardFromUser(username);
+            scoreCardDao.updateScore(scorecard_id, current_round, 0);
+            gameDao.progressTurn(game_id);
+            return;
+        }
+        if( current_round==15){
+            // Todo:  calc total
+            Integer scorecard_id = game.getScorecardFromUser(username);
+            scoreCardDao.updateScore(scorecard_id, current_round, 0);
+            gameDao.progressTurn(game_id);
+            return;
+        }
         Integer current_throw = game.getCurrent_throw();
-        String username = request.getParameter("username");
+
 
         boolean is_done = (request.getParameter("is_done") != null);
         boolean is_roll = (request.getParameter("is_roll") != null);
@@ -137,7 +153,17 @@ public class GameServlet extends HttpServlet {
         } else if( is_roll) {
 
             gameDao.updateDiceThrow(game_id);
-
+            if(current_throw==2){
+                Integer dice_1 = Math.abs(game.getDice1());
+                Integer dice_2 = Math.abs(game.getDice2());
+                Integer dice_3 = Math.abs(game.getDice3());
+                Integer dice_4 = Math.abs(game.getDice4());
+                Integer dice_5 = Math.abs(game.getDice5());
+                Integer score = Util.calculateScore(game.getCurrent_round(), dice_1, dice_2, dice_3, dice_4, dice_5);
+                Integer scorecard_id = game.getScorecardFromUser(username);
+                scoreCardDao.updateScore(scorecard_id, current_round, score);
+                gameDao.progressTurn(game_id);
+            }
         } else{
 
             boolean dice_1_state_changed = (request.getParameter("dice_1") != null);
