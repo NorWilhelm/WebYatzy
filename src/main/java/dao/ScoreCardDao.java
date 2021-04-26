@@ -12,5 +12,6 @@ public interface ScoreCardDao {
     ScoreCard findScoreCard (Integer id);
     void removeScoreCard (Integer id);
     void updateScore(Integer scorecard_id, Integer round, Integer score);
-
+    void calcBonus(Integer card_id);
+    void calcTotal(Integer card_id);
 }

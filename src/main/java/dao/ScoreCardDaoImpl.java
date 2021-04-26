@@ -39,6 +39,45 @@ public class ScoreCardDaoImpl implements ScoreCardDao {
         score_card.setScoreFromRound(round, score);
         em.merge(score_card);
     }
+    @Override
+    public void calcBonus(Integer card_id){
+        ScoreCard card = findScoreCard(card_id);
+        Integer sum = 0;
+        sum += card.getOnes();
+        sum += card.getTwos();
+        sum += card.getThrees();
+        sum += card.getFours();
+        sum += card.getFives();
+        sum += card.getSixes();
+        if (sum >= 61){
+            card.setBonus(50);
+            em.merge(card);
+        }
+    }
+    @Override
+    public void calcTotal(Integer card_id){
+        ScoreCard card = findScoreCard(card_id);
+        Integer sum = 0;
+        sum += card.getOnes();
+        sum += card.getTwos();
+        sum += card.getThrees();
+        sum += card.getFours();
+        sum += card.getFives();
+        sum += card.getSixes();
+        sum += card.getBonus();
+        sum += card.getThree_kind();
+        sum += card.getFour_kind();
+        sum += card.getFull_house();
+        sum += card.getSmall_straight();
+        sum += card.getLarge_straight();
+        sum += card.getYatzy();
+        sum += card.getChance();
+        card.setTotal(sum);
+        em.merge(card);
+    }
+
+
+
 
 //    @Override
 //    public void updateScoreCard (Integer count, User user) {

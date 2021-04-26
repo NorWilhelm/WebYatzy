@@ -71,7 +71,7 @@ public class Util {
         }
 
         /* calculation for THREE OF A KIND */
-        if (round == 9) {
+        if (round == 8) {
             sort(dice);
             if ((dice[0] == dice[1] && dice[1] == dice[2]) || (dice[1] == dice[2] && dice[2] == dice[3]) || (dice[2] == dice[3] && dice[3] == dice[4])) {
 
@@ -83,7 +83,7 @@ public class Util {
         }
 
         /* calculation for FOUR OF A KIND */
-        if (round == 10) {
+        if (round == 9) {
             sort(dice);
             if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3]) || (dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4])) {
                 for (int i = 0; i < dice.length; i++) {
@@ -93,30 +93,30 @@ public class Util {
         }
 
         /* calculation for FULL HOUSE */
-        if (round == 11) {
+        if (round == 10) {
             sort(dice);
             if ((dice[0] == dice[1] && dice[1] == dice[2] && dice[3] == dice[4]) || (dice[0] == dice[1] && dice[2] == dice[3] && dice[3] == dice[4])) score = 25;
         }
 
         /* calculation for SMALL STRAIGHT */
-        if (round == 12) {
+        if (round == 11) {
             sort(dice);
             if ((dice[0] == 1 && dice[1] == 2 && dice[2] == 3 && dice[3] == 4) || (dice[0] == 1 && dice[1] == 1 && dice[2] == 2 && dice[3] == 3 && dice[4] == 4) || (dice[0] == 1 && dice[1] == 2 && dice[2] == 2 && dice[3] == 3 && dice[4] == 4) || (dice[0] == 1 && dice[1] == 2 && dice[2] == 3 && dice[3] == 3 && dice[4] == 4) || (dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 5) || (dice[0] == 2 && dice[1] == 2 && dice[2] == 3 && dice[3] == 4 && dice[4] == 5) || (dice[0] == 2 && dice[1] == 3 && dice[2] == 3 && dice[3] == 4 && dice[4] == 5) || (dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 4 && dice[4] == 5) || (dice[0] == 3 && dice[1] == 4 && dice[2] == 5 && dice [3] == 6) || (dice[0] == 3 && dice[1] == 3 && dice[2] == 4 && dice [3] == 5 && dice[4] == 6) || (dice[0] == 3 && dice[1] == 4 && dice[2] == 4 && dice [3] == 5 && dice[4] == 6) || (dice[0] == 3 && dice[1] == 4 && dice[2] == 5 && dice [3] == 5 && dice[4] == 6) ) score = 30;
         }
         /* calculation for LARGE STRAIGHT */
-        if (round == 13) {
+        if (round == 12) {
             sort(dice);
 
             if ((dice[0] == 1 && dice[1] == 2 && dice[2] == 3 && dice[3] == 4 && dice[4] == 5) || (dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 5 && dice[4] == 6)) score = 40;
         }
         /* calculation for YAHTZEE */
-        if (round == 14) {
+        if (round == 13) {
             if (dice[0] == dice[1] && dice[1] == dice[2] && dice[2] == dice[3] && dice[3] == dice[4]) score = 50;
 
 
         }
         /* calculation for CHANCE */
-        if (round == 15) {
+        if (round == 14) {
             for (int i = 0; i < dice.length; i++) {
                 score += dice[i];
             }
