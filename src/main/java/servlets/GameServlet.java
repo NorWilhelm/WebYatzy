@@ -142,7 +142,7 @@ public class GameServlet extends HttpServlet {
             request.setAttribute("username", username);
             request.getRequestDispatcher("lobbies.jsp").forward(request, response);
 
-        } else if( is_done || current_throw==3){
+        } else if( is_done){
 
             Integer dice_1 = Math.abs(game.getDice1());
             Integer dice_2 = Math.abs(game.getDice2());
@@ -156,8 +156,8 @@ public class GameServlet extends HttpServlet {
 
         } else if( is_roll) {
 
-            gameDao.updateDiceThrow(game_id);
-          /*  if(current_throw==2){
+
+            if(current_throw==4){
                 Integer dice_1 = Math.abs(game.getDice1());
                 Integer dice_2 = Math.abs(game.getDice2());
                 Integer dice_3 = Math.abs(game.getDice3());
@@ -167,7 +167,8 @@ public class GameServlet extends HttpServlet {
                 Integer scorecard_id = game.getScorecardFromUser(username);
                 scoreCardDao.updateScore(scorecard_id, current_round, score);
                 gameDao.progressTurn(game_id);
-            }*/
+            } else{gameDao.updateDiceThrow(game_id);}
+
         } else{
 
             boolean dice_1_state_changed = (request.getParameter("dice_1") != null);
