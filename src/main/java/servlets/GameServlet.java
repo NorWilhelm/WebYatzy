@@ -119,17 +119,21 @@ public class GameServlet extends HttpServlet {
 
         Game game = gameDao.findGame(game_id);
         Integer current_round = game.getCurrent_round();
+
+
+        Integer current_throw = game.getCurrent_throw();
+
+
+        boolean is_done = (request.getParameter("is_done") != null);
+        boolean is_roll = (request.getParameter("is_roll") != null);
+
         if( current_round ==7){
             // Todo:  calc bonus
             Integer scorecard_id = game.getScorecardFromUser(username);
             scoreCardDao.calcBonus(scorecard_id);
             gameDao.progressTurn(game_id);
-            request.setAttribute("game_id", game_id);
-            request.setAttribute("username", username);
-            request.getRequestDispatcher("game_session.jsp").forward(request, response);
-            return;
-        }
-        if( current_round==15){
+
+        } else if( current_round==15){
             // Todo:  calc total
             Integer scorecard_id = game.getScorecardFromUser(username);
             scoreCardDao.calcTotal(scorecard_id);
@@ -137,14 +141,8 @@ public class GameServlet extends HttpServlet {
             request.setAttribute("game_id", game_id);
             request.setAttribute("username", username);
             request.getRequestDispatcher("lobbies.jsp").forward(request, response);
-            return;
-        }
-        Integer current_throw = game.getCurrent_throw();
 
-
-        boolean is_done = (request.getParameter("is_done") != null);
-        boolean is_roll = (request.getParameter("is_roll") != null);
-        if( is_done || current_throw==3){
+        } else if( is_done || current_throw==3){
 
             Integer dice_1 = Math.abs(game.getDice1());
             Integer dice_2 = Math.abs(game.getDice2());
@@ -159,7 +157,7 @@ public class GameServlet extends HttpServlet {
         } else if( is_roll) {
 
             gameDao.updateDiceThrow(game_id);
-            if(current_throw==2){
+          /*  if(current_throw==2){
                 Integer dice_1 = Math.abs(game.getDice1());
                 Integer dice_2 = Math.abs(game.getDice2());
                 Integer dice_3 = Math.abs(game.getDice3());
@@ -169,7 +167,7 @@ public class GameServlet extends HttpServlet {
                 Integer scorecard_id = game.getScorecardFromUser(username);
                 scoreCardDao.updateScore(scorecard_id, current_round, score);
                 gameDao.progressTurn(game_id);
-            }
+            }*/
         } else{
 
             boolean dice_1_state_changed = (request.getParameter("dice_1") != null);
