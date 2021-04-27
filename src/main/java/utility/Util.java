@@ -31,11 +31,14 @@ public class Util {
     public static int calculateScore(int round, int dice1, int dice2, int dice3, int dice4, int dice5) {
         int[] dice = {dice1, dice2, dice3, dice4, dice5};
         int score = 0;
+        
+        /* calculation for ONES */
         if (round == 1) {
             for (int i = 0; i < dice.length; i++) {
                 if (dice[i] == 1) score += 1;
             }
 
+        /* calculation for TWOS */
         }
         if (round == 2) {
             for (int i = 0; i < dice.length; i++) {
